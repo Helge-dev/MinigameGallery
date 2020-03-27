@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: cb0e7010551fba449978e1c3431e1a62
   - enabled: 1
+    path: Assets/Scenes/EndScene.unity
+    guid: 3506d8340bc2830428f3a76b636cc53f
+  - enabled: 1
     path: Assets/Scenes/BumperBalls.unity
     guid: d1e005d4a1835774396082ea1061f2aa
   m_configObjects: {}
