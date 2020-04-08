@@ -6,5 +6,17 @@ using UnityEngine;
  */
 public class test : MonoBehaviour
 {
-    public void StartNextScene() => CommonCommands.NextGame(null, null);
+    List<string> firstPlace = new List<string>();
+    List<string> secondPlace = new List<string>();
+    public void StartNextScene() => CommonCommands.NextGame(firstPlace, secondPlace);
+    List<InputManager> controllers = new List<InputManager>(); //List of components with players inputs
+    void Awake()
+    {
+        //Put InputManagers of GameObjects with "GameController" Tag into a array
+        foreach (GameObject o in GameObject.FindGameObjectsWithTag("GameController"))
+        {
+            controllers.Add(o.GetComponent<InputManager>()); 
+        }
+        Debug.Log("Amount of Controllers Registered = " + controllers.Count);
+    }
 }

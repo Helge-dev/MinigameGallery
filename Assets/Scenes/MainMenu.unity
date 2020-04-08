@@ -629,6 +629,8 @@ GameObject:
   m_Component:
   - component: {fileID: 985526845}
   - component: {fileID: 985526844}
+  - component: {fileID: 985526847}
+  - component: {fileID: 985526846}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -663,6 +665,85 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &985526846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 985526843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 532bce3256b05c449997d5c3b5955408, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &985526847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 985526843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: 11400000, guid: 3a2efecb06fad1742b37fcfa25cde8b6, type: 3}
+  m_NotificationBehavior: 0
+  m_UIEventSystem: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f47d9a53-8b14-4053-ab37-e2d77087042a
+    m_ActionName: 
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 267e9b05-1b6e-4aef-ac17-e9348cb613fa
+    m_ActionName: 
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7a237516-c4e2-4998-9b34-a3de649c0697
+    m_ActionName: 
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 22a3f576-d492-4e24-82ff-94ad047928ae
+    m_ActionName: 
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: dc5bafc2-b72a-432c-ab80-83da3f98aab4
+    m_ActionName: 
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: eaaf7bb9-3aab-41d5-93db-75b1d616f60e
+    m_ActionName: 
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 74734196-e2ce-4f0d-9d34-5522d3be1f13
+    m_ActionName: 
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c384b9c5-0627-4407-a3a1-aa76b902ff02
+    m_ActionName: 
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a5073a4e-5009-4ddd-9e81-da1d57ba9c9d
+    m_ActionName: 
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5a358cd5-be4e-4c41-92fe-b9a991bf653a
+    m_ActionName: 
+  m_AutoSwitchControlScheme: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: '{12143fb0-5165-4fe5-8169-30c100867f45}'
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &1513041636
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,17 +1,21 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+/*
+ * Made By Helge Herrström
+ */
 public static class CommonCommands
 {
     /*
      * Call this in the minigame scene when the game is done
-     * firstPlace - The players that came first (Index is the players ID)
-     * secondPlace - The players that came second (Index is the players ID)
+     * firstPlace - The players that won (Index is the players name, for example P1,P2,P3...)
+     * secondPlace - The players on second place
      */
-    public static void NextGame(List<int> firstPlace, List<int> secondPlace)
+    public static void NextGame(List<string> firstPlace, List<string> secondPlace)
     {
         AddPlayersScores(firstPlace, secondPlace);
+        firstPlace.Clear();
+        secondPlace.Clear();
         DataStorage.GamesLeft -= 1;
         if (GameDone())
         {
@@ -25,20 +29,20 @@ public static class CommonCommands
     /*
      * Add the relevant scores to the players depending on their placing in the game
      */
-    static void AddPlayersScores(List<int> firstPlace, List<int> secondPlace)
+    static void AddPlayersScores(List<string> firstPlace, List<string> secondPlace)
     {
         if (firstPlace != null)
         {
-            foreach (int i in firstPlace)
+            foreach (string i in firstPlace)
             {
-                DataStorage.Scores[i] += 3;
+                DataStorage.GetSetScore[i] += 3;
             }
         }
         if (secondPlace != null)
         {
-            foreach (int i in secondPlace)
+            foreach (string i in secondPlace)
             {
-                DataStorage.Scores[i] += 2;
+                DataStorage.GetSetScore[i] += 2;
             }
         }
     }
