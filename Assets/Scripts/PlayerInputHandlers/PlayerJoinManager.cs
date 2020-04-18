@@ -4,6 +4,7 @@
  */
 public class PlayerJoinManager : MonoBehaviour
 {
+    [SerializeField] PlayerColorManager colorManager;
     void OnPlayerJoined() => SetNewPlayersData(); //When a new controller is connected, Set the name of the controller and other player specific data
     //Set the name of new players and other related data.
     void SetNewPlayersData()
@@ -23,12 +24,21 @@ public class PlayerJoinManager : MonoBehaviour
         {
             if (g.name == "Controller(Clone)") //If it's a new player
             {
-                g.name = "P" + (go.Length - (amountOfNewPlayers-1)); //Set name
                 amountOfNewPlayers--; //Keep count of new players registered
-                DontDestroyOnLoad(g); //Prevent the new player to be destroyed on future scene loads
-                DataStorage.GetSetScore.Add(g.name,0); //Set the players scores
-                Debug.Log("PLAYER " + g.name + " JOINED!");
+                SetNewPlayerData(g, go.Length-amountOfNewPlayers);
             }
         }
+    }
+    void SetNewPlayerData(GameObject g, int playerIndex)
+    {
+        g.name = "P" + playerIndex; //Set name
+        DataStorage.GetSetControllers.Add(playerIndex,g.GetComponent<InputManager>()); //Store a reference of controller
+        DontDestroyOnLoad(g); //Prevent the new player to be destroyed on future scene loads
+        DataStorage.GetSetScore.Add(playerIndex, 0); //Set the players scores
+        //Add color to the player
+        DataStorage.GetSetPlayerColor.Add(playerIndex, Color.black);
+        colorManager.UpdateToNewPlayerImage(playerIndex); // Changes the design in the UI
+        colorManager.ChangePlayerColor(playerIndex); 
+        Debug.Log("PLAYER " + g.name + " JOINED!");
     }
 }
