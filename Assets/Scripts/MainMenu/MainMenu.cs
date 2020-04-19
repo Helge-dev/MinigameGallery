@@ -88,6 +88,7 @@ public class MainMenu : MonoBehaviour
     //Find scenes that can be played with the amount of players connected 
     void FindPlayableScenes()
     {
+        DataStorage.GetSetPlayableGames.Clear();
         FindEightPlayerScenes();
         if (DataStorage.GetSetControllers.Count <= 4) //Find scenes that can be played up to four players
         {
@@ -103,11 +104,9 @@ public class MainMenu : MonoBehaviour
     {
         foreach (string path in System.IO.Directory.GetFiles(Application.dataPath + foldierPath, "*.unity"))
         {
+            //Add the scene (And make it readable for unity)
             string directory = path.Replace(".unity", "").Replace('\\', '/').Replace(Application.dataPath, "").TrimStart('/');
-            if (!DataStorage.GetSetPlayableGames.Contains(directory))
-            {
-                DataStorage.GetSetPlayableGames.Add(directory); //Add the scene (And make it readable for unity)
-            }
+            DataStorage.GetSetPlayableGames.Add(directory); 
         }
     }
     //Hide Option Items and show Menu
