@@ -26,7 +26,7 @@ public class MainMenu : MonoBehaviour
     }
     void HandlePlayerInputs()
     {
-        for (int count = 1; count < DataStorage.GetSetControllers.Count + 1; count++)
+        for (int count = 1; count < DataStorage.GetSetControllers.Count + 1; count++) //For each player controller
         {
             if (DataStorage.GetSetControllers[count].GetButtonEastPressed) //If button is pressed, change the players color
             {

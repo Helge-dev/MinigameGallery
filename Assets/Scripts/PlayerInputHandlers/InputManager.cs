@@ -30,8 +30,8 @@ public class InputManager : MonoBehaviour
     public bool GetButtonStartDown { get => buttonStartDown; }
     //Returns true if the player wants to move in a direction (For example in a menu)
     public bool GetMoveUp { get => moveUp == 1; }
-    public bool GetMoveDown { get => moveDown == 1; }
-    public bool GetMoveLeft { get => moveLeft == 1; }
+    public bool GetMoveDown { get => moveDown == -1; }
+    public bool GetMoveLeft { get => moveLeft == -1; }
     public bool GetMoveRight { get => moveRight == 1; }
     /*
      * Methods

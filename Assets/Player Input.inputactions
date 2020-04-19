@@ -121,6 +121,18 @@
                 },
                 {
                     "name": "",
+                    "path": "<HID::Bensussen Deutsch & Associates,Inc.(BDA) Core (Plus) Wired Controller>/Stick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Switch Pro",
+                    "action": "Move",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "",
                     "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
@@ -137,6 +149,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
+                    "action": "ButtonSouth",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "",
+                    "path": "<HID::Bensussen Deutsch & Associates,Inc.(BDA) Core (Plus) Wired Controller>/button2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Switch Pro",
                     "action": "ButtonSouth",
                     "chainWithPrevious": false,
                     "isComposite": false,
@@ -169,6 +193,18 @@
                 },
                 {
                     "name": "",
+                    "path": "<HID::Bensussen Deutsch & Associates,Inc.(BDA) Core (Plus) Wired Controller>/button1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Switch Pro",
+                    "action": "ButtonWest",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "",
                     "path": "<Gamepad>/buttonNorth",
                     "interactions": "",
                     "processors": "",
@@ -185,6 +221,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
+                    "action": "ButtonNorth",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "",
+                    "path": "<HID::Bensussen Deutsch & Associates,Inc.(BDA) Core (Plus) Wired Controller>/button4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Switch Pro",
                     "action": "ButtonNorth",
                     "chainWithPrevious": false,
                     "isComposite": false,
@@ -217,6 +265,18 @@
                 },
                 {
                     "name": "",
+                    "path": "<HID::Bensussen Deutsch & Associates,Inc.(BDA) Core (Plus) Wired Controller>/button3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Switch Pro",
+                    "action": "ButtonEast",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "",
                     "path": "<Keyboard>/upArrow",
                     "interactions": "",
                     "processors": "",
@@ -233,6 +293,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
+                    "action": "MoveUp",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "",
+                    "path": "<HID::Bensussen Deutsch & Associates,Inc.(BDA) Core (Plus) Wired Controller>/dpad/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Switch Pro",
                     "action": "MoveUp",
                     "chainWithPrevious": false,
                     "isComposite": false,
@@ -265,6 +337,18 @@
                 },
                 {
                     "name": "",
+                    "path": "<HID::Bensussen Deutsch & Associates,Inc.(BDA) Core (Plus) Wired Controller>/dpad/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Switch Pro",
+                    "action": "MoveDown",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "",
                     "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",
@@ -281,6 +365,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "New control scheme",
+                    "action": "MoveLeft",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "",
+                    "path": "<HID::Bensussen Deutsch & Associates,Inc.(BDA) Core (Plus) Wired Controller>/dpad/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Switch Pro",
                     "action": "MoveLeft",
                     "chainWithPrevious": false,
                     "isComposite": false,
@@ -313,6 +409,18 @@
                 },
                 {
                     "name": "",
+                    "path": "<HID::Bensussen Deutsch & Associates,Inc.(BDA) Core (Plus) Wired Controller>/dpad/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Switch Pro",
+                    "action": "MoveRight",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "",
                     "path": "<Gamepad>/start",
                     "interactions": "",
                     "processors": "",
@@ -329,6 +437,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
+                    "action": "Start",
+                    "chainWithPrevious": false,
+                    "isComposite": false,
+                    "isPartOfComposite": false,
+                    "modifiers": ""
+                },
+                {
+                    "name": "",
+                    "path": "<HID::Bensussen Deutsch & Associates,Inc.(BDA) Core (Plus) Wired Controller>/button14",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Switch Pro",
                     "action": "Start",
                     "chainWithPrevious": false,
                     "isComposite": false,
@@ -358,6 +478,18 @@
             "devices": [
                 {
                     "devicePath": "<Gamepad>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        },
+        {
+            "name": "Switch Pro",
+            "basedOn": "",
+            "bindingGroup": "Switch Pro",
+            "devices": [
+                {
+                    "devicePath": "<HID::Bensussen Deutsch & Associates,Inc.(BDA) Core (Plus) Wired Controller>",
                     "isOptional": false,
                     "isOR": false
                 }
