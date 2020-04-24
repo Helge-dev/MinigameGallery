@@ -148,7 +148,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.8301887, g: 0.8301887, b: 0.8301887, a: 1}
+  m_BackGroundColor: {r: 0.9150943, g: 0.9150943, b: 0.9150943, a: 1}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
@@ -402,6 +402,8 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 8d3ed4d88c67e804d9021476165d7ac5, type: 2}
   timeScale: 1
   RightSideHit: {fileID: 1253423842}
+  LeftSideHit: {fileID: 1672210658}
+  timerText: 0.5
 --- !u!96 &836967065
 TrailRenderer:
   serializedVersion: 2
@@ -691,7 +693,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 493.5, y: -145}
+  m_AnchoredPosition: {x: 463, y: -13}
   m_SizeDelta: {x: 191, y: 36.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1253423842
@@ -836,7 +838,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -389, y: 165.75}
+  m_AnchoredPosition: {x: -287, y: 174}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1672210658
