@@ -20,43 +20,57 @@ public static class DataStorage
     /*
      * Properties
      */
-    //Returns how many games are left to play
+    /// <summary>
+    /// Returns how many games are left to play
+    /// </summary>
     public static int GetSetGamesLeft
     {
         get => gamesLeft;
         set => gamesLeft = value;
     }
-    //Returns how many games to have played
+    /// <summary>
+    /// Returns how many games to have played
+    /// </summary>
     public static int AmountOfGames
     {
         get => amountOfGames;
         set => amountOfGames = value;
     }
-    //Returns player scores
+    /// <summary>
+    /// Returns player scores
+    /// </summary>
     public static SortedDictionary<int, int> GetSetScore
     {
         get => scores;
         set => scores = value;
     }
-    //Returns player colors
+    /// <summary>
+    /// Returns player colors
+    /// </summary>
     public static SortedDictionary<int, Color> GetSetPlayerColor
     {
         get => playerColors;
         set => playerColors = value;
     }
-    //Returns player controllers
+    /// <summary>
+    /// Returns player controllers
+    /// </summary>
     public static SortedDictionary<int, InputManager> GetSetControllers
     {
         get => controllers;
         set => controllers = value;
     }
-    //Returns a list of scene names that can be played with the amount of players connected
+    /// <summary>
+    /// Returns a list of scene names that can be played with the amount of players connected
+    /// </summary>
     public static List<string> GetSetPlayableGames
     {
         get => playableGames;
         set => playableGames = value;
     }
-    //Returns a list of scenes that has been played
+    /// <summary>
+    /// Returns a list of scenes that has been played
+    /// </summary>
     public static List<string> GetSetFilteredGames
     {
         get => filteredGames;
