@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 /*
@@ -9,11 +8,11 @@ public static class CommonCommands
 {
     static readonly string sceneMainMenu = "MainMenu";
     static readonly string sceneEndScene = "EndScene";
-    /*
-     * Call this in the minigame scene when the game is done
-     * firstPlace - The players that won (Stored int is the players personal number (For Example, Player 1 has 1, P2 2 and so on))
-     * secondPlace - The players in second place
-     */
+    /// <summary>
+    /// Call this in the minigame scene when the game is done. Score is set automatically
+    /// </summary>
+    /// <param name="firstPlace">The players that won (Stored int is the players personal number (For Example, Player 1 has 1, P2 2 and so on))</param>
+    /// <param name="secondPlace">The players in second place (Stored int is the players personal number (For Example, Player 1 has 1, P2 2 and so on))</param>
     public static void NextGame(List<int> firstPlace, List<int> secondPlace)
     {
         AddPlayersScores(firstPlace, secondPlace);
@@ -68,12 +67,12 @@ public static class CommonCommands
     {
         LoadGameScene(sceneMainMenu);
     }
-    /*
-     * Start the Next Game
-     * Loads a random scene that isn't main menu or Ending scene (main menu is 0 and Ending 1 in "Build Settings" at file tab)
-     * How to allow your scene to load with the game: While the scene is open, Press "Add Open Scenes" at File/Build Settings
-     * NOT RECOMMENDED TO CALL. USE NextGame() WHICH KEEPS TRACK OF THE GAME COUNT AND PROCESS SCORES
-     */
+     /// <summary>
+     /// Start the Next Game
+     /// Loads a random scene that isn't main menu or Ending scene (main menu is 0 and Ending 1 in "Build Settings" at file tab)
+     /// How to allow your scene to load with the game: While the scene is open, Press "Add Open Scenes" at File/Build Settings
+     /// NOT RECOMMENDED TO CALL.USE NextGame() WHICH KEEPS TRACK OF THE GAME COUNT AND PROCESS SCORES
+     /// </summary>
     public static void LoadNextScene()
     {
         //Sort out games that has already been played
