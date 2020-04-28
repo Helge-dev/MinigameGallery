@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 /*
  * Created by Helge Herrström 
  */
@@ -6,6 +7,14 @@ public class PlayerSpawnMananger : MonoBehaviour
 {
     [SerializeField] GameObject playerObject;
     [SerializeField] Transform playerTransform;
+    /// <summary>
+    /// Returns the transform all players are placed in
+    /// </summary>
+    public Transform GetPlayerTransform { get => playerTransform; }
+    /// <summary>
+    /// The key is the players controller ID and value is the players character
+    /// </summary>
+    public SortedDictionary<int, GameObject> GetSetPlayers { get; set; } = new SortedDictionary<int, GameObject>();
     /// <summary>
     /// Creates a player for each controller registered
     /// </summary>
@@ -15,7 +24,10 @@ public class PlayerSpawnMananger : MonoBehaviour
         {
             GameObject player = Instantiate(playerObject, new Vector3(0,(playerObject.transform.localScale.y/2f),0), Quaternion.identity, playerTransform);
             player.GetComponent<PlayerBehaviour>().GetSetPlayerID = id;
-            player.GetComponent<Renderer>().material.color = DataStorage.GetSetPlayerColor[id];
+            player.GetComponent<ColorCustomizer>().SetPlayerColor(DataStorage.GetSetPlayerColor[id]);
+            GetSetPlayers.Add(id, player);
         }
+        GetComponent<TeamManager>().PlacePlayersInTeams(this);
     }
+    
 }

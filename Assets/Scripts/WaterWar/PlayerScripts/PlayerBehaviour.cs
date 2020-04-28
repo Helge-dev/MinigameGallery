@@ -1,49 +1,67 @@
 ﻿using UnityEngine;
-
+/*
+ * Made by Helge Herrström
+ */
+ /*
+  * This is the main class for Handling a player character
+  */
 public class PlayerBehaviour : MonoBehaviour
 {
-    Rigidbody rigidbody;
-    const float jumpForce = 200f,
-                moveForce = 0.1f;
-    int playerID; //The player this object listens to
+    /*
+     * Variables
+     */
+    [SerializeField] Rigidbody rigidbody; //PlayerObjects Rigidbody used for physics
+    [SerializeField] PlayerActionManager actionManager; //Action Manager class
+    static readonly PlayerMovementBehaviour movementB = new PlayerMovementBehaviour(); //Movement Manager class
+    const int waterMeterMax = 10; // Max value of Water Meter
+    int waterMeter = 0; // Water Meter value
+    bool outOfGame = false; // If player is out of game
     /// <summary>
-    /// Returns the player his object listens to
+    /// Returns the player id this object listens for inputs.
     /// </summary>
-    public int GetSetPlayerID
+    public int GetSetPlayerID { get; set; }
+    /// <summary>
+    /// Returns true if the player is out of game
+    /// </summary>
+    public bool GetSetPlayerOutOfGame
     {
-        get => playerID;
-        set => playerID = value;
+        get
+        {
+            return outOfGame;
+        }
+        set
+        {
+            gameObject.SetActive(!value);
+            outOfGame = value;
+        }
     }
-    void Start()
+    /*
+     * Methods 
+     */
+    void Update()
     {
-        rigidbody = GetComponent<Rigidbody>();
+        if (GetSetPlayerOutOfGame) //If player out of game
+        {
+            PlayerOutOfGameUpdate();
+        }
+        else //If player in game
+        {
+            PlayerInGameUpdate();
+        }
     }
-
-    // Update is called once per frame
+    /// <summary>
+    /// The update when the player is out of the game
+    /// </summary>
+    void PlayerOutOfGameUpdate() {}
+    /// <summary>
+    /// The update when the player is in game
+    /// </summary>
+    void PlayerInGameUpdate()
+    {
+        actionManager.DoActionUpdate(GetSetPlayerID, rigidbody, ref waterMeter);
+    }
     void FixedUpdate()
     {
-        DoPlayerMovementAndRotation();
-    }
-    /// <summary>
-    /// Process player movement
-    /// </summary>
-    void DoPlayerMovementAndRotation()
-    {
-        Vector3 movement = DataStorage.GetSetControllers[playerID].GetMovement * moveForce;
-        if (movement != Vector3.zero)
-        {
-            MoveAndRotate(movement);
-        }
-        if (Physics.Raycast(transform.position, Vector3.down, 0.6f) && (DataStorage.GetSetControllers[playerID].GetButtonSouthDown)) //if button down and on ground, Jump
-        {
-            rigidbody.AddForce(0, jumpForce, 0); //Jump
-        }
-    }
-    //Move and rotate object
-    void MoveAndRotate(Vector3 movement)
-    {
-        transform.rotation = Quaternion.Euler(Vector3.zero);
-        transform.Translate(movement);
-        transform.LookAt(transform.position + movement);
+        movementB.DoMovementUpdate(GetSetPlayerID, rigidbody); //Do Movement
     }
 }
