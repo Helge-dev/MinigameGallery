@@ -4,6 +4,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] PlayerSpawnMananger psm;
     [SerializeField] TeamManager tm;
+    bool gameEnded = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,9 +20,13 @@ public class GameManager : MonoBehaviour
 
     void CheckIfGameDone()
     {
-        if (tm.IsThereOneTeamLeft())
+        if (!gameEnded)
         {
-            CommonCommands.NextGame(new System.Collections.Generic.List<int>(),new System.Collections.Generic.List<int>());
+            gameEnded = tm.IsThereOneTeamLeft();
+            if (gameEnded)
+            {
+                CommonCommands.NextGame(new System.Collections.Generic.List<int>(), new System.Collections.Generic.List<int>());
+            }
         }
     }
 }
