@@ -16,18 +16,18 @@ public class PlayerActionManager : MonoBehaviour
     /// </summary>
     /// <param name="playerID">The player this object will listen to for inputs</param>
     /// <param name="waterMeter">The water meter of the player</param>
-    public void DoActionUpdate(int playerID, Rigidbody rigidbody, ref int waterMeter)
+    public void DoActionUpdate(int playerID, CharacterController controller, ref int waterMeter)
     {
         sendCollisionTimer += Time.deltaTime;
-        ShootAction(playerID, rigidbody, ref waterMeter);
+        ShootAction(playerID, controller, ref waterMeter);
     }
-    void ShootAction(int playerID, Rigidbody rigidbody, ref int waterMeter)
+    void ShootAction(int playerID, CharacterController controller, ref int waterMeter)
     {
         if (DataStorage.GetSetControllers[playerID].GetButtonWestDown)
         {
             if (sendCollisionTimer >= sendCollisionCheckDuration) //Send a water collision detection
             {
-                Instantiate(waterBullet, water.transform.position + rigidbody.transform.forward * (rigidbody.transform.localScale.z - waterBullet.transform.localScale.z), rigidbody.rotation, bulletHolder);
+                Instantiate(waterBullet, water.transform.position + controller.transform.forward * (controller.transform.localScale.z - waterBullet.transform.localScale.z), controller.transform.rotation, bulletHolder);
                 sendCollisionTimer = 0;
             }
         }

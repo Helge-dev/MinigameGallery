@@ -22,7 +22,7 @@ public class PlayerSpawnMananger : MonoBehaviour
     {
         for (int id = 1; id <= DataStorage.GetSetControllers.Count; id++)
         {
-            GameObject player = Instantiate(playerObject, new Vector3(0,(playerObject.transform.localScale.y/2f),0), Quaternion.identity, playerTransform);
+            GameObject player = Instantiate(playerObject, new Vector3(id*playerObject.transform.localScale.x,(playerObject.transform.localScale.y/2f),0), Quaternion.identity, playerTransform);
             player.GetComponent<PlayerBehaviour>().GetSetPlayerID = id;
             player.GetComponent<ColorCustomizer>().SetPlayerColor(DataStorage.GetSetPlayerColor[id]);
             GetSetPlayers.Add(id, player);

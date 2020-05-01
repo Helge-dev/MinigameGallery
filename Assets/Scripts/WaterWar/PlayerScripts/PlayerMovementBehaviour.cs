@@ -1,13 +1,16 @@
 ﻿using UnityEngine;
 
-public class PlayerMovementBehaviour
+public class PlayerMovementBehaviour : MonoBehaviour
 {
     /*
      * Variables 
      */
-    const float jumpForce = 150f,
-                moveForce = 0.1f,
-                rotationSpeed = 0.2f;
+    const float jumpForce = 0.2f,
+                moveForce = 0.05f,
+                rotationSpeed = 0.2f,
+                gravity = 0.02f;
+    float velocityY = 0;
+    
     /*
      * Methods 
      */
@@ -16,22 +19,28 @@ public class PlayerMovementBehaviour
     /// </summary>
     /// <param name="playerID">The player this object will listen to for inputs</param>
     /// <param name="rigidbody">The Rigidbody perform movement with</param>
-    public void DoMovementUpdate(int playerID, Rigidbody rigidbody) => DoPlayerMovementAndRotation(playerID, rigidbody); //Once per physics update. Do movement
+    public void DoMovementUpdate(int playerID, CharacterController controller) => DoPlayerMovementAndRotation(playerID, controller); //Once per physics update. Do movement
     /// <summary>
     /// Process player movement
     /// </summary>
-    void DoPlayerMovementAndRotation(int playerID, Rigidbody rb)
+    void DoPlayerMovementAndRotation(int playerID, CharacterController controller)
     {
         Vector3 movement = DataStorage.GetSetControllers[playerID].GetMovement * moveForce;
-        if (movement != Vector3.zero) //If the Players Controller is Moving
+        if (movement != Vector3.zero)
         {
-            //Move and Rotate
-            rb.transform.Translate(movement, Space.World);
-            rb.transform.rotation = Quaternion.Slerp(rb.transform.rotation, Quaternion.LookRotation(movement), rotationSpeed);
+            controller.transform.rotation = Quaternion.Slerp(controller.transform.rotation, Quaternion.LookRotation(movement), rotationSpeed);
         }
-        if (Physics.Raycast(rb.transform.position, Vector3.down, 0.6f) && (DataStorage.GetSetControllers[playerID].GetButtonSouthDown)) //if button down and on ground, Jump
+        if (controller.isGrounded)
         {
-            rb.AddForce(0, jumpForce, 0); //Jump
+            if (DataStorage.GetSetControllers[playerID].GetButtonSouthDown) //if button down and on ground, Jump
+            {
+                velocityY = jumpForce;
+            }
         }
+        else
+        {
+            velocityY -= gravity;
+        }
+        controller.Move(movement + new Vector3(0,velocityY,0));
     }
 }

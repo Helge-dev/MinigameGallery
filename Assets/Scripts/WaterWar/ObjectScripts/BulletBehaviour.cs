@@ -19,5 +19,13 @@ public class BulletBehaviour : MonoBehaviour
         }
     }
     void Move() => transform.Translate(transform.forward * moveSpeed, Space.World); // Move bullet forward
-    
+    void OnCollisionEnter(Collision collision)
+    {
+        switch (collision.gameObject.tag)
+        {
+            default:
+                Destroy(gameObject);
+                break;
+        }
+    }
 }

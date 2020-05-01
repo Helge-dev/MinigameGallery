@@ -10,9 +10,9 @@ public class PlayerBehaviour : MonoBehaviour
     /*
      * Variables
      */
-    [SerializeField] Rigidbody rigidbody; //PlayerObjects Rigidbody used for physics
+    [SerializeField] CharacterController controller; //PlayerObjects Rigidbody used for physics
     [SerializeField] PlayerActionManager actionManager; //Action Manager class
-    static readonly PlayerMovementBehaviour movementB = new PlayerMovementBehaviour(); //Movement Manager class
+    readonly PlayerMovementBehaviour movementB = new PlayerMovementBehaviour(); //Movement Manager class
     const int waterMeterMax = 10; // Max value of Water Meter
     int waterMeter = 0; // Water Meter value
     bool outOfGame = false; // If player is out of game
@@ -58,10 +58,10 @@ public class PlayerBehaviour : MonoBehaviour
     /// </summary>
     void PlayerInGameUpdate()
     {
-        actionManager.DoActionUpdate(GetSetPlayerID, rigidbody, ref waterMeter);
+        actionManager.DoActionUpdate(GetSetPlayerID, controller, ref waterMeter);
     }
     void FixedUpdate()
     {
-        movementB.DoMovementUpdate(GetSetPlayerID, rigidbody); //Do Movement
+        movementB.DoMovementUpdate(GetSetPlayerID, controller); //Do Movement
     }
 }
