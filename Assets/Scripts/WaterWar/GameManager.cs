@@ -20,12 +20,15 @@ public class GameManager : MonoBehaviour
 
     void CheckIfGameDone()
     {
-        if (!gameEnded)
+        if (!gameEnded) //If game not ended
         {
+            //Update teams
+            tm.UpdateTeams();
+            //Check if game ended
             gameEnded = tm.IsThereOneTeamLeft();
-            if (gameEnded)
+            if (gameEnded) //If game ended
             {
-                CommonCommands.NextGame(new System.Collections.Generic.List<int>(), new System.Collections.Generic.List<int>());
+                CommonCommands.NextGame(tm.GetTeamFirstPlace(), tm.GetTeamSecondPlace()); //Start next game
             }
         }
     }

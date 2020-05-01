@@ -1,14 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class TeamManager : MonoBehaviour
 {
+    [SerializeField] PlayerSpawnMananger playerSpawnManager;
     /// <summary>
     /// The key is any number between 0 and amount of teams-1 and  the value is a list of players in that team (Player id in character controller)
     /// </summary>
     public SortedDictionary<int, List<int>> GetSetTeams { get; set; } = new SortedDictionary<int, List<int>>();
-
+    List<int> teamOutOrder = new List<int>(); //Saves the order in which teams are out
+    /// <summary>
+    /// Update team logic (Keeps track of which team is out or not)
+    /// </summary>
+    public void UpdateTeams()
+    {
+        UpdateTeamOutList();
+    }
     public void PlacePlayersInTeams(PlayerSpawnMananger psm)
     {
         List<int> players = new List<int>();
@@ -104,34 +111,68 @@ public class TeamManager : MonoBehaviour
             i.Clear();
         }
         GetSetTeams.Clear();
+        teamOutOrder.Clear();
     }
-
+    /// <summary>
+    /// Returns true if only one team is left
+    /// </summary>
+    /// <returns></returns>
     public bool IsThereOneTeamLeft()
     {
-        PlayerSpawnMananger psm = GetComponent<PlayerSpawnMananger>();
-        bool oneTeamAliveFound = false;
-        foreach (List<int> i in GetSetTeams.Values) //For each team
+        if (teamOutOrder.Count >= GetSetTeams.Keys.Count - 1)
+            return true;
+        return false;
+    }
+    /// <summary>
+    /// Returns the last team standing
+    /// </summary>
+    /// <returns></returns>
+    public List<int> GetTeamFirstPlace()
+    {
+        //Find the team that isn't out of game and return them
+        foreach (int i in GetSetTeams.Keys)
         {
-            foreach (int p in i) //For each player
+            if (!teamOutOrder.Contains(i))
             {
-                if (!psm.GetSetPlayers[p].GetComponent<PlayerBehaviour>().GetSetPlayerOutOfGame) //If player is alive
+                return GetSetTeams[i];
+            }
+        }
+        Debug.Log("WARNING: There is no winner!");
+        return null;
+    }
+    /// <summary>
+    /// Returns the team in second place
+    /// </summary>
+    /// <returns></returns>
+    public List<int> GetTeamSecondPlace()
+    {
+        return GetSetTeams[teamOutOrder[GetSetTeams.Count - 2]];
+    }
+
+    void UpdateTeamOutList()
+    {
+        for (int team = 0; team < GetSetTeams.Count; team++)
+        {
+            if (teamOutOrder.Contains(team))
+            {
+                continue;
+            }
+            else
+            {
+                bool playerInGame = false;
+                foreach (int player in GetSetTeams[team])
                 {
-                    if (oneTeamAliveFound) //If another team is alive
+                    if (!playerSpawnManager.GetSetPlayers[player].GetComponent<PlayerBehaviour>().GetSetPlayerOutOfGame)
                     {
-                        return false; //Return false
-                    }
-                    else //Else
-                    {
-                        oneTeamAliveFound = true; //Set that a team is alive
+                        playerInGame = true;
                         break;
                     }
                 }
+                if (!playerInGame)
+                {
+                    teamOutOrder.Add(team);
+                }
             }
         }
-        if (!oneTeamAliveFound)
-        {
-            Debug.Log("There is O players alive?");
-        }
-        return true; //Return that only one team is alive
     }
 }

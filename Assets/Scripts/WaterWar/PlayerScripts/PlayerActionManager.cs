@@ -3,6 +3,14 @@
 public class PlayerActionManager : MonoBehaviour
 {
     [SerializeField] GameObject waterBullet;
+    [SerializeField] ParticleSystem water;
+    static Transform bulletHolder;
+    const float sendCollisionCheckDuration = 0.2f; //The lower the more accurate the collision detection will be of the particle system
+    float sendCollisionTimer = 0f; //A timer
+    private void Start()
+    {
+        bulletHolder = GameObject.FindGameObjectWithTag("BulletHolder").transform;
+    }
     /// <summary>
     /// Call this inside "void Update()" to track player button actions
     /// </summary>
@@ -10,13 +18,22 @@ public class PlayerActionManager : MonoBehaviour
     /// <param name="waterMeter">The water meter of the player</param>
     public void DoActionUpdate(int playerID, Rigidbody rigidbody, ref int waterMeter)
     {
+        sendCollisionTimer += Time.deltaTime;
         ShootAction(playerID, rigidbody, ref waterMeter);
     }
     void ShootAction(int playerID, Rigidbody rigidbody, ref int waterMeter)
     {
         if (DataStorage.GetSetControllers[playerID].GetButtonWestDown)
         {
-            Instantiate(waterBullet, rigidbody.transform.position + rigidbody.transform.forward*(rigidbody.transform.localScale.z - waterBullet.transform.localScale.z), rigidbody.rotation, GameObject.FindGameObjectWithTag("BulletHolder").transform);
+            if (sendCollisionTimer >= sendCollisionCheckDuration) //Send a water collision detection
+            {
+                Instantiate(waterBullet, water.transform.position + rigidbody.transform.forward * (rigidbody.transform.localScale.z - waterBullet.transform.localScale.z), rigidbody.rotation, bulletHolder);
+                sendCollisionTimer = 0;
+            }
+        }
+        else
+        {
+            water.Play(); // Stop the particle system from emitting particles
         }
     }
 }
