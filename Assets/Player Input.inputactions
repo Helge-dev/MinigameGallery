@@ -123,7 +123,7 @@
                     "name": "",
                     "path": "<HID::Bensussen Deutsch & Associates,Inc.(BDA) Core (Plus) Wired Controller>/Stick",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "InvertVector2(invertX=false)",
                     "groups": "Switch Pro",
                     "action": "Move",
                     "chainWithPrevious": false,
