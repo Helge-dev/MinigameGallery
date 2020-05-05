@@ -4,6 +4,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] PlayerSpawnMananger psm;
     [SerializeField] TeamManager tm;
+    [SerializeField] UIManager uim;
     bool gameEnded = false;
     // Start is called before the first frame update
     void Start()
@@ -12,10 +13,12 @@ public class GameManager : MonoBehaviour
         //Create Map
         //Spawn Players
         psm.CreatePlayers();
+        uim.SetupUI(psm);
     }
     void Update()
     {
         CheckIfGameDone();
+        uim.UpdateUI(psm);
     }
 
     void CheckIfGameDone()

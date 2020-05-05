@@ -23,12 +23,13 @@ public class PlayerActionManager : MonoBehaviour
     }
     void ShootAction(int playerID, CharacterController controller, ref int waterMeter)
     {
-        if (DataStorage.GetSetControllers[playerID].GetButtonWestDown)
+        if (DataStorage.GetSetControllers[playerID].GetButtonWestDown && waterMeter > 0)
         {
             if (sendCollisionTimer >= sendCollisionCheckDuration) //Send a water collision detection
             {
                 Instantiate(waterBullet, water.transform.position + controller.transform.forward * (controller.transform.localScale.z - waterBullet.transform.localScale.z), controller.transform.rotation, bulletHolder);
                 sendCollisionTimer = 0;
+                waterMeter--;
             }
         }
         else

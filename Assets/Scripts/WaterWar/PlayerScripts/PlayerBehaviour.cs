@@ -14,7 +14,7 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField] PlayerActionManager actionManager; //Action Manager class
     readonly PlayerMovementBehaviour movementB = new PlayerMovementBehaviour(); //Movement Manager class
     const int waterMeterMax = 10; // Max value of Water Meter
-    int waterMeter = 0; // Water Meter value
+    int waterMeter = waterMeterMax; // Water Meter value
     bool outOfGame = false; // If player is out of game
     /// <summary>
     /// Returns the player id this object listens for inputs.
@@ -34,6 +34,17 @@ public class PlayerBehaviour : MonoBehaviour
             gameObject.SetActive(!value);
             outOfGame = value;
         }
+    }
+    /// <summary>
+    /// returns how much of this players water meter is filled.
+    /// </summary>
+    public int GetWaterMeter
+    {
+        get => waterMeter;
+    }
+    public static int GetWaterMeterMAX
+    {
+        get => waterMeterMax;
     }
     /*
      * Methods 
