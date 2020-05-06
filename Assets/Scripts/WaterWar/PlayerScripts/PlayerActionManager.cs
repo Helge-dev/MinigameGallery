@@ -7,6 +7,8 @@ public class PlayerActionManager : MonoBehaviour
     static Transform bulletHolder;
     const float sendCollisionCheckDuration = 0.2f; //The lower the more accurate the collision detection will be of the particle system
     float sendCollisionTimer = 0f; //A timer
+    const float fillWaterDuration = 0.2f; //The time it takes to fill one bar of water
+    float fillWaterTimer = 0f; //A timer
     private void Start()
     {
         bulletHolder = GameObject.FindGameObjectWithTag("BulletHolder").transform;
@@ -19,6 +21,7 @@ public class PlayerActionManager : MonoBehaviour
     public void DoActionUpdate(int playerID, CharacterController controller, ref int waterMeter)
     {
         sendCollisionTimer += Time.deltaTime;
+        fillWaterTimer += Time.deltaTime;
         ShootAction(playerID, controller, ref waterMeter);
     }
     void ShootAction(int playerID, CharacterController controller, ref int waterMeter)
@@ -35,6 +38,14 @@ public class PlayerActionManager : MonoBehaviour
         else
         {
             water.Play(); // Stop the particle system from emitting particles
+        }
+    }
+    public void FillWaterMeter(ref int waterMeter)
+    {
+        if (fillWaterTimer >= fillWaterDuration && waterMeter < PlayerBehaviour.GetWaterMeterMAX)
+        {
+            waterMeter++;
+            fillWaterTimer = 0;
         }
     }
 }

@@ -75,4 +75,5 @@ public class PlayerBehaviour : MonoBehaviour
     {
         movementB.DoMovementUpdate(GetSetPlayerID, controller); //Do Movement
     }
+    public void FillWaterMeter() => actionManager.FillWaterMeter(ref waterMeter);
 }
