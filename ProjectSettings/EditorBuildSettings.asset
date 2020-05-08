@@ -4,5 +4,17 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: cb0e7010551fba449978e1c3431e1a62
+  - enabled: 1
+    path: Assets/Scenes/EndScene.unity
+    guid: 3506d8340bc2830428f3a76b636cc53f
+  - enabled: 1
+    path: Assets/Scenes/EightPlayerGames/WaterWar.unity
+    guid: 00a3f71d1bd8a3b41b79008c29630abc
+  - enabled: 1
+    path: Assets/Scenes/EightPlayerGames/Table Tennis.unity
+    guid: 9e8edf4eb3aa1a64ebab8afcc8cb2a60
   m_configObjects: {}
