@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class BallCollision : MonoBehaviour
 {
-    public int nrOfBounces;
+    public int nrOfBouncesBad;
+    public int nrOfBouncesGood;
+    //[SerializeField]
+    public BallMovement ballMovement;
+    public Rigidbody rigidbody;
 
     void Start()
     {
@@ -20,8 +24,31 @@ public class BallCollision : MonoBehaviour
     {
         if (c.collider.name == "Table")
         {
-            nrOfBounces++;
-            Debug.Log(nrOfBounces);
+            if(ballMovement.left == true)
+            {
+                if(rigidbody.position.x < 0)
+                {
+                    nrOfBouncesGood++;
+
+                }
+                else
+                {
+                    nrOfBouncesBad++;
+                }
+            }
+            else if (ballMovement.left == false)
+            {
+                if (rigidbody.position.x > 0)
+                {
+                    nrOfBouncesGood++;
+                }
+                else
+                {
+                    nrOfBouncesBad++;
+                }
+            }
+            Debug.Log("bad" + nrOfBouncesBad);
+            Debug.Log("good" + nrOfBouncesGood);
         }
         
     }
