@@ -2,13 +2,14 @@
 
 public class PlayerActionManager : MonoBehaviour
 {
-    [SerializeField] GameObject waterBullet;
-    [SerializeField] ParticleSystem water;
+    [SerializeField] GameObject waterBullet = null;
+    [SerializeField] ParticleSystem water = null;
     static Transform bulletHolder;
     const float sendCollisionCheckDuration = 0.2f; //The lower the more accurate the collision detection will be of the particle system
     float sendCollisionTimer = 0f; //A timer
     const float fillWaterDuration = 0.2f; //The time it takes to fill one bar of water
     float fillWaterTimer = 0f; //A timer
+    const float raycastForwardReach = 1f;
     private void Start()
     {
         bulletHolder = GameObject.FindGameObjectWithTag("BulletHolder").transform;
@@ -23,6 +24,7 @@ public class PlayerActionManager : MonoBehaviour
         sendCollisionTimer += Time.deltaTime;
         fillWaterTimer += Time.deltaTime;
         ShootAction(playerID, controller, ref waterMeter);
+        ForwardRaycastUpdate(controller, playerID);
     }
     void ShootAction(int playerID, CharacterController controller, ref int waterMeter)
     {
@@ -46,6 +48,26 @@ public class PlayerActionManager : MonoBehaviour
         {
             waterMeter++;
             fillWaterTimer = 0;
+        }
+    }
+    void ForwardRaycastUpdate(CharacterController controller, int playerID)
+    {
+        if (DataStorage.GetSetControllers[playerID].GetButtonNorthDown)
+        {
+            Ray ray = new Ray(controller.transform.position, controller.transform.TransformDirection(Vector3.forward));
+            RaycastHit info = new RaycastHit();
+            if (Physics.Raycast(ray, out info, raycastForwardReach))
+            {
+                UpdateInteractionWithObjects(controller, info, playerID);
+            }
+        }
+    }
+    void UpdateInteractionWithObjects(CharacterController controller, RaycastHit info, int playerID)
+    {
+        if (info.collider.tag == "PlayerInteractable")
+        {
+            GameWorldObject wObject = info.collider.GetComponent<GameWorldObject>();
+            wObject.Interact(controller);
         }
     }
 }

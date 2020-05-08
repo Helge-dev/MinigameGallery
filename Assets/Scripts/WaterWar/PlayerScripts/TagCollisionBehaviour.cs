@@ -3,7 +3,7 @@
 public class TagCollisionBehaviour : MonoBehaviour
 {
     readonly string bulletTag = "Bullet";
-    [SerializeField] PlayerBehaviour playerBehaviour;
+    [SerializeField] PlayerBehaviour playerBehaviour = null;
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == bulletTag)

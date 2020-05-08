@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class TeamManager : MonoBehaviour
 {
-    [SerializeField] PlayerSpawnMananger playerSpawnManager;
+    [SerializeField] PlayerSpawnMananger playerSpawnManager = null;
     /// <summary>
     /// The key is any number between 0 and amount of teams-1 and  the value is a list of players in that team (Player id in character controller)
     /// </summary>

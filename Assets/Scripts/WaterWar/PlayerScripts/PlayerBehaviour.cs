@@ -10,8 +10,8 @@ public class PlayerBehaviour : MonoBehaviour
     /*
      * Variables
      */
-    [SerializeField] CharacterController controller; //PlayerObjects Rigidbody used for physics
-    [SerializeField] PlayerActionManager actionManager; //Action Manager class
+    [SerializeField] CharacterController controller = null; //PlayerObjects Rigidbody used for physics
+    [SerializeField] PlayerActionManager actionManager = null; //Action Manager class
     readonly PlayerMovementBehaviour movementB = new PlayerMovementBehaviour(); //Movement Manager class
     const int waterMeterMax = 10; // Max value of Water Meter
     int waterMeter = waterMeterMax; // Water Meter value

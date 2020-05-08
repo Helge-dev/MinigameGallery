@@ -6,35 +6,13 @@ public class GameWorldObject : MonoBehaviour
         Washer,
         Table
     }
-    [SerializeField] WorldObject go;
-    void OnCollisionStay(Collision collision)
+    [SerializeField] WorldObject go = WorldObject.Table;
+    public void Interact(CharacterController controller)
     {
-        switch (collision.gameObject.tag)
+        switch (go)
         {
-            case "Player":
-                switch (go)
-                {
-                    case WorldObject.Table:
-                        collision.gameObject.transform.localScale = Vector3.zero;
-                        break;
-                    case WorldObject.Washer:
-                        collision.gameObject.GetComponent<PlayerBehaviour>().FillWaterMeter();
-                        break;
-                }
-                break;
-        }
-    }
-    private void OnCollisionExit(Collision collision)
-    {
-        switch (collision.gameObject.tag)
-        {
-            case "Player":
-                switch (go)
-                {
-                    case WorldObject.Table:
-                        collision.gameObject.transform.localScale = Vector3.one;
-                        break;
-                }
+            case WorldObject.Washer:
+                controller.GetComponent<PlayerBehaviour>().FillWaterMeter();
                 break;
         }
     }

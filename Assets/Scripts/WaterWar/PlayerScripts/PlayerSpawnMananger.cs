@@ -5,8 +5,8 @@ using UnityEngine;
  */
 public class PlayerSpawnMananger : MonoBehaviour
 {
-    [SerializeField] GameObject playerObject;
-    [SerializeField] Transform playerTransform;
+    [SerializeField] GameObject playerObject = null;
+    [SerializeField] Transform playerTransform = null;
     /// <summary>
     /// Returns the transform all players are placed in
     /// </summary>

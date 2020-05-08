@@ -6,9 +6,10 @@ public class PlayerMovementBehaviour
      * Variables 
      */
     const float jumpForce = 0.2f,
-                moveForce = 0.05f,
+                moveForce = 0.1f,
                 rotationSpeed = 0.2f,
-                gravity = 0.02f;
+                gravity = 0.02f,
+                raycastForwardReach = 1f;
     float velocityY = 0;
     
     /*

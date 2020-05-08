@@ -8,6 +8,7 @@ TagManager:
   - BulletHolder
   - Bullet
   - Damageable
+  - PlayerInteractable
   layers:
   - Default
   - TransparentFX

@@ -2,9 +2,9 @@
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] PlayerSpawnMananger psm;
-    [SerializeField] TeamManager tm;
-    [SerializeField] UIManager uim;
+    [SerializeField] PlayerSpawnMananger psm = null;
+    [SerializeField] TeamManager tm = null;
+    [SerializeField] UIManager uim = null;
     bool gameEnded = false;
     // Start is called before the first frame update
     void Start()

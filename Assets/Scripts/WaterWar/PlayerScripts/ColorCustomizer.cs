@@ -2,8 +2,8 @@
 
 public class ColorCustomizer : MonoBehaviour
 {
-    [SerializeField] Renderer[] teamColorRenderers;
-    [SerializeField] Renderer[] playerColorRenderers;
+    [SerializeField] Renderer[] teamColorRenderers = null;
+    [SerializeField] Renderer[] playerColorRenderers = null;
 
     /// <summary>
     /// Add a team color to the player
