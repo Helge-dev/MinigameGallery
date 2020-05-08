@@ -8,44 +8,83 @@ using UnityEngine.UI;
 public class BallMovement : MonoBehaviour
 {
     public Rigidbody rb;
-    public bool buttonState = true;
-    public bool canHit = true;
-    public float timer = 2f;
-    public Material[] material;
+    public bool buttonState = true, hitOnce = true;
+    public float timer = 2f, timeScale, timerText = 0.5f;
+    public int rightEnd = 50, leftEnd = -50;
+    [SerializeField]
+    Material[] material = null;
     Renderer rend;
-    public float timeScale;
-    public Text RightSideHit, LeftSideHit;
-    public float timerText = 0.5f;
+    [SerializeField]
+    Text PlayerRight, PlayerLeft, leftSideHit, rightSideHit;
+    [SerializeField]
+    BallCollision ballCollision = null;
+    List<int> PlayerListLeft = new List<int>();
+    List<int> PlayerListRight = new List<int>();
+    bool left = true;
+    int whoIsHitting;
+
 
 
     void Start()
     {
+        
         rend = GetComponent<Renderer>();
         rend.enabled = true;
         rend.sharedMaterial = material[1];
-        //rb.AddForce(1500, 500, 0);
-        Time.timeScale = timeScale;
-        
+        int count = 0;
+        if(DataStorage.GetSetControllers != null)
+        {
+            foreach (int i in DataStorage.GetSetControllers.Keys)
+            {
+                if (count % 2 == 0)
+                {
+                    PlayerListLeft.Add(i);
+                }
+                else
+                {
+                    PlayerListRight.Add(i);
+                }
+
+                count++;
+            }
+            Console.WriteLine(PlayerListLeft.Count + PlayerListRight.Count);
+        }
+
+        whoIsHitting = PlayerListLeft[0];
     }
     void Update()
     {
         Time.timeScale = timeScale;
-        Time.timeScale = 3f;
-        timerText += Time.deltaTime;
-        if ((rb.position.x <= -50 || rb.position.x >= 50) && canHit == false)
+
+        /*if(PlayerListLeft.Count > PlayerListRight.Count)
+        {
+            whoIsHitting = PlayerListLeft[0];
+        }*/
+        if (PlayerListRight.Count != 0)
+        {
+            PlayerRight.text = "Player " + PlayerListRight[0];
+            PlayerRight.color = DataStorage.GetSetPlayerColor[PlayerListRight[0]];
+        }
+        if (PlayerListLeft.Count != 0)
+        {
+            PlayerLeft.text = "Player " + PlayerListLeft[0];
+            PlayerLeft.color = DataStorage.GetSetPlayerColor[PlayerListLeft[0]];
+        }
+
+        if ((rb.position.x <= leftEnd || rb.position.x >= rightEnd) && hitOnce == false)
         {
             rb.velocity = Vector3.zero;
             rb.useGravity = false;
             buttonState = true;
-            canHit = true;
+            hitOnce = true;
             rend.sharedMaterial = material[1];
             
         }
-        if(rb.position.x < 50 && rb.position.x > -50)
+        if(rb.position.x < rightEnd && rb.position.x > leftEnd)
         {
-            canHit = false;
+            hitOnce = false;
         }
-        if (canHit)
+        if (hitOnce)
         {
             timer -= Time.deltaTime;
             if(timer <= 0)
@@ -57,85 +96,99 @@ public class BallMovement : MonoBehaviour
             }
         }
 
-
-        if (Input.GetKey("1") && buttonState == true)
+        if (ballCollision.nrOfBounces > 1 && buttonState == true)
         {
-            if(rb.position.x <= -50)
+            rb.useGravity = true;
+            buttonState = false;
+            rend.sharedMaterial = material[0];
+            if(PlayerListLeft.Count <= 1 && PlayerListRight.Count <= 1)
             {
                 
-                rb.AddForce(1000, 800, 0);
-                RightSideHit.text = "Normal shot!";
-            }
-            else
-            {
-                rb.AddForce(-1000, 800, 0);
-                LeftSideHit.text = "Normal shot!";
-            }
-           
-            //RightSideHit.transform.
-            AfterHit();
-        }
-        if (Input.GetKey("2") && buttonState == true)
-        {
-            if (rb.position.x <= -50)
-            {
-                rb.AddForce(825, 1400, 0);
-                RightSideHit.text = "High shot!";
-            }
-            else
-            {
-                rb.AddForce(-825, 1400, 0);
-                LeftSideHit.text = "High shot!";
-            }
-            //RightSideHit.transform.Rotate(new Vector3(30, 0, 0));
-            AfterHit();
-        }
-        if (Input.GetKey("3") && buttonState == true)
-        {
-            if (rb.position.x <= -50)
-            {
-                rb.AddForce(2100, -20, 0);
-                RightSideHit.text = "Smash!";
-            }
-            else
-            {
-                rb.AddForce(-2100, -20, 0);
-                LeftSideHit.text = "Smash!";
-            }
-            //RightSideHit.transform.
-            AfterHit();
-        }
-        if (Input.GetKey("4") && buttonState == true)
-        {
-            timer = 0f;
-            if (rb.position.x <= -50)
-            {
-                rb.AddForce(600, 800, 0);
-                RightSideHit.text = "Light shot!";
-            }
+                if (left)
+                {
+                    CommonCommands.NextGame(PlayerListLeft, PlayerListRight);
+                    
+                }
+                else if (!left)
+                {
+                    CommonCommands.NextGame(PlayerListRight, PlayerListLeft);
+                }
                 
-            else
+            }
+            if (left)
             {
-                rb.AddForce(-600, 800, 0);
-                LeftSideHit.text = "Light shot!";
+                PlayerListLeft.RemoveAt(PlayerListLeft.Count - 1);
+            }
+            else if (!left)
+            {
+                PlayerListRight.RemoveAt(PlayerListRight.Count - 1);
             }
 
-            /*RightSideHit.transform.eulerAngles = new Vector3(
-                RightSideHit.transform.eulerAngles.x,
-                RightSideHit.transform.eulerAngles.y,
-                RightSideHit.transform.eulerAngles.z + 5);*/
-            AfterHit();
+
+            
+            
+        }
+
+        if ((Input.GetKey("1") || DataStorage.GetSetControllers[whoIsHitting].GetButtonEastPressed ) && buttonState == true)
+        {
+            Hit(1000, 800, "Normal Hit");
+        }
+        if ((Input.GetKey("2") || DataStorage.GetSetControllers[whoIsHitting].GetButtonSouthPressed) && buttonState == true)
+        {
+            Hit(825, 1400, "High Hit");
+        }
+        if ((Input.GetKey("3") || DataStorage.GetSetControllers[whoIsHitting].GetButtonWestPressed) && buttonState == true)
+        {
+            Hit(2100, -20, "Smash");
+        }
+        if ((Input.GetKey("4") || DataStorage.GetSetControllers[whoIsHitting].GetButtonNorthPressed) && buttonState == true)
+        {
+            Hit(600, 800, "Low Hit");
         }
 
     }
 
+    public void Hit(int x, int y, string hitType)
+    {
+        if (rb.position.x <= leftEnd)
+        {
+
+            rb.AddForce(x, y, 0);
+            leftSideHit.text = hitType;
+        }
+        else
+        {
+            rb.AddForce(-x, y, 0);
+            rightSideHit.text = hitType;
+        }
+
+        AfterHit();
+    }
+
     public void AfterHit()
     {
+        
+        if(left)
+        {
+            PlayerListRight.Add(PlayerListLeft[0]);
+            PlayerListLeft.RemoveAt(0);
+            whoIsHitting = PlayerListRight[0];
+            left = false;
+        }
+        else
+        {
+            PlayerListLeft.Add(PlayerListRight[0]);
+            PlayerListRight.RemoveAt(0);
+            whoIsHitting = PlayerListLeft[0];
+            left = true;
+        }
+        
         rb.useGravity = true;
         buttonState = false;
         rend.sharedMaterial = material[0];
         timer = 2;
         timeScale += 0.1f;
-
+        ballCollision.nrOfBounces = 0;
+        Debug.Log("Player nr: " + whoIsHitting + " is Hitting");
     }
 }
