@@ -35,6 +35,8 @@ public class BallMovement : MonoBehaviour
         rend.enabled = true;
         rend.sharedMaterial = material[1];
         int count = 0;
+
+        //Puts all the players in these two lists
         if(DataStorage.GetSetControllers != null)
         {
             foreach (int i in DataStorage.GetSetControllers.Keys)
@@ -60,6 +62,7 @@ public class BallMovement : MonoBehaviour
         Time.timeScale = timeScale;
         timerText -= Time.deltaTime;
 
+        //Manages the "reset"
         if (resetGame)
         {
             timeBeforeReset -= Time.deltaTime;
@@ -70,6 +73,7 @@ public class BallMovement : MonoBehaviour
             }
         }
         
+        //resets the texts after 0,5 sec
         if(timerText <= 0)
         {
             
@@ -80,6 +84,8 @@ public class BallMovement : MonoBehaviour
         {
             whoIsHitting = PlayerListLeft[0];
         }*/
+
+        //Updates the UI to show everyone who's next 
         if (PlayerListRight.Count != 0)
         {
             PlayerRight.text = "Player " + PlayerListRight[0];
@@ -92,6 +98,7 @@ public class BallMovement : MonoBehaviour
             PlayerLeft.color = DataStorage.GetSetPlayerColor[PlayerListLeft[0]];
         }
 
+        //Makes the ball possible to hit, but only once
         if ((rb.position.x <= leftEnd || rb.position.x >= rightEnd) && hitOnce == false)
         {
             rb.velocity = Vector3.zero;
@@ -99,12 +106,15 @@ public class BallMovement : MonoBehaviour
             buttonState = true;
             hitOnce = true;
             rend.sharedMaterial = material[1];
-            
+           
         }
+
+        //used to reset the condition of when you can hit
         if(rb.position.x < rightEnd && rb.position.x > leftEnd)
         {
             hitOnce = false;
         }
+        //keeps track of the timer before the ball drops
         if (hitOnce)
         {
             timer -= Time.deltaTime;
@@ -118,8 +128,8 @@ public class BallMovement : MonoBehaviour
             }
         }
 
-        
-        if ((ballCollision.nrOfBouncesBad > 1)&& buttonState == true)
+        //removes players from the game. Also checks who the winner is
+        if ((ballCollision.nrOfBouncesBad >= 1))
         {
             rb.useGravity = true;
             buttonState = false;
@@ -150,8 +160,8 @@ public class BallMovement : MonoBehaviour
             
         }
         //This is just copy of the "if" statement above but removes the other person instead youself! I only changed left to right and right to left
-        
-        if (ballCollision.nrOfBouncesGood > 1 && buttonState == true)
+        //Will combine the code so it becomes more readable
+        if (ballCollision.nrOfBouncesGood > 1)
         {
             rb.useGravity = true;
             buttonState = false;
@@ -182,7 +192,7 @@ public class BallMovement : MonoBehaviour
 
         }
 
-
+        //These are the 4 different "hits" you can go and their values
         if ((Input.GetKey("1") || DataStorage.GetSetControllers[whoIsHitting].GetButtonEastPressed ) && buttonState == true)
         {
             Hit(1000, 800, "Normal Hit", 10);
@@ -206,6 +216,7 @@ public class BallMovement : MonoBehaviour
     {
 
     }
+    //manages the hit
     public void Hit(int x, int y, string hitType, int zr)
     {
         // zr = the rotation for the z angle. I need to rotate it back somehow!
@@ -226,6 +237,7 @@ public class BallMovement : MonoBehaviour
         AfterHit();
     }
 
+    //this method manages everyhing that happens after the ball has been hit. Also manages the queues for the players
     public void AfterHit()
     {
         
@@ -254,6 +266,7 @@ public class BallMovement : MonoBehaviour
         Debug.Log("Player nr: " + whoIsHitting + " is Hitting");
     }
 
+    //Resets the ball when a player is removed from the match
     public void Reset()
     {
         rb.transform.position = new Vector3(-50, 10, 0);
