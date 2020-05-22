@@ -5,6 +5,7 @@ using System;
 using UnityEngine.UI;
 using TMPro;
 using UnityEditor;
+using System.Threading;
 
 public class BallMovement : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class BallMovement : MonoBehaviour
     public bool left = true;
     int whoIsHitting;
     bool resetGame;
+    bool canEnd = true;
     
 
 
@@ -80,10 +82,6 @@ public class BallMovement : MonoBehaviour
             leftSideHit.text = null;
             rightSideHit.text = null;
         }
-        /*if(PlayerListLeft.Count > PlayerListRight.Count)
-        {
-            whoIsHitting = PlayerListLeft[0];
-        }*/
 
         //Updates the UI to show everyone who's next 
         if (PlayerListRight.Count != 0)
@@ -114,6 +112,7 @@ public class BallMovement : MonoBehaviour
         {
             hitOnce = false;
         }
+
         //keeps track of the timer before the ball drops
         if (hitOnce)
         {
@@ -128,7 +127,11 @@ public class BallMovement : MonoBehaviour
             }
         }
 
+        EndGame(PlayerListLeft, PlayerListRight, ballCollision.nrOfBouncesBad, 1);
+        EndGame(PlayerListRight, PlayerListLeft, ballCollision.nrOfBouncesGood, 2);
+
         //removes players from the game. Also checks who the winner is
+        /*
         if ((ballCollision.nrOfBouncesBad >= 1))
         {
             rb.useGravity = true;
@@ -158,9 +161,10 @@ public class BallMovement : MonoBehaviour
             resetGame = true;
             //Reset();
             
-        }
+        }*/
         //This is just copy of the "if" statement above but removes the other person instead youself! I only changed left to right and right to left
         //Will combine the code so it becomes more readable
+        /*
         if (ballCollision.nrOfBouncesGood > 1)
         {
             rb.useGravity = true;
@@ -171,7 +175,6 @@ public class BallMovement : MonoBehaviour
                 if (left)
                 {
                     CommonCommands.NextGame(PlayerListRight, PlayerListLeft);
-
                 }
                 else if (!left)
                 {
@@ -190,7 +193,7 @@ public class BallMovement : MonoBehaviour
             resetGame = true;
             //Reset();
 
-        }
+        }*/
 
         //These are the 4 different "hits" you can go and their values
         if ((Input.GetKey("1") || DataStorage.GetSetControllers[whoIsHitting].GetButtonEastPressed ) && buttonState == true)
@@ -240,21 +243,8 @@ public class BallMovement : MonoBehaviour
     //this method manages everyhing that happens after the ball has been hit. Also manages the queues for the players
     public void AfterHit()
     {
-        
-        if(left)
-        {
-            PlayerListRight.Add(PlayerListLeft[0]);
-            PlayerListLeft.RemoveAt(0);
-            whoIsHitting = PlayerListRight[0];
-            left = false;
-        }
-        else
-        {
-            PlayerListLeft.Add(PlayerListRight[0]);
-            PlayerListRight.RemoveAt(0);
-            whoIsHitting = PlayerListLeft[0];
-            left = true;
-        }
+        FindObjectOfType<AudioManager>().Play("Hit");
+        QueueHandler();
         timerText = 1f; 
         rb.useGravity = true;
         buttonState = false;
@@ -277,5 +267,85 @@ public class BallMovement : MonoBehaviour
         rend.sharedMaterial = material[1];
         timeBeforeReset = 5f;
         timer = 3;
+    }
+
+    public void QueueHandler()
+    {
+        if (PlayerListLeft.Count + PlayerListRight.Count > 2 || PlayerListLeft.Count + PlayerListRight.Count < 2)
+        {
+            //Debug.Log("Doesn't Work!!!!");
+            if (left)
+            {
+                PlayerListRight.Add(PlayerListLeft[0]);
+                PlayerListLeft.RemoveAt(0);
+                whoIsHitting = PlayerListRight[0];
+                left = false;
+            }
+            else
+            {
+                PlayerListLeft.Add(PlayerListRight[0]);
+                PlayerListRight.RemoveAt(0);
+                whoIsHitting = PlayerListLeft[0];
+                left = true;
+            }
+        }
+        else
+        {
+            //Debug.Log("Works!!!!");
+            if (left)
+            {
+                //PlayerListRight.Add(PlayerListLeft[0]);
+                //PlayerListLeft.RemoveAt(0);
+
+                if(PlayerListRight.Count > 0)
+                    whoIsHitting = PlayerListRight[0];
+                left = false;
+            }
+            else
+            {
+                //PlayerListLeft.Add(PlayerListRight[0]);
+                //PlayerListRight.RemoveAt(0);
+                if(PlayerListRight.Count > 0)
+                    whoIsHitting = PlayerListLeft[0];
+                left = true;
+            }
+        }
+    }
+
+    public void EndGame(List<int> firstList, List<int> secondList, int bounces, int howMany)
+    {
+        if ((bounces >= howMany))
+        {
+            rb.useGravity = true;
+            buttonState = false;
+            rend.sharedMaterial = material[0];
+            if (PlayerListLeft.Count <= 1 && PlayerListRight.Count <= 1 && canEnd)
+            {
+                if (left)
+                {
+                    CommonCommands.NextGame(firstList, secondList);
+
+                }
+                else if (!left)
+                {
+                    CommonCommands.NextGame(secondList, firstList);
+                }
+                canEnd = false;
+            }
+            else
+            {
+                if (left)
+                {
+                    PlayerListLeft.RemoveAt(PlayerListLeft.Count - 1);
+                }
+                else if (!left)
+                {
+                    PlayerListRight.RemoveAt(PlayerListRight.Count - 1);
+                }
+            }
+
+            resetGame = true;
+
+        }
     }
 }

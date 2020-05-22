@@ -24,6 +24,7 @@ public class BallCollision : MonoBehaviour
     {
         if (c.collider.name == "Table")
         {
+            FindObjectOfType<AudioManager>().Play("BallBounce");
             if(ballMovement.left == true)
             {
                 if(rigidbody.position.x < 0)
