@@ -560,8 +560,8 @@ MonoBehaviour:
   material:
   - {fileID: 2100000, guid: edc38720955c17a448a44737bd0dde8c, type: 2}
   - {fileID: 2100000, guid: 8d3ed4d88c67e804d9021476165d7ac5, type: 2}
-  PlayerRight: {fileID: 1078514620}
-  PlayerLeft: {fileID: 601069966}
+  playerRight: {fileID: 1078514620}
+  playerLeft: {fileID: 601069966}
   leftSideHit: {fileID: 1672210658}
   rightSideHit: {fileID: 1253423842}
   ballCollision: {fileID: 836967066}
@@ -1622,12 +1622,42 @@ PrefabInstance:
     - target: {fileID: 6072123316469052834, guid: ba2149c6d089c184cb5fc91e70bd22fe,
         type: 3}
       propertyPath: sounds.Array.data[1].volume
-      value: 0.571
+      value: 0.639
       objectReference: {fileID: 0}
     - target: {fileID: 6072123316469052834, guid: ba2149c6d089c184cb5fc91e70bd22fe,
         type: 3}
       propertyPath: sounds.Array.data[1].pitch
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6072123316469052834, guid: ba2149c6d089c184cb5fc91e70bd22fe,
+        type: 3}
+      propertyPath: sounds.Array.data[1].loop
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6072123316469052834, guid: ba2149c6d089c184cb5fc91e70bd22fe,
+        type: 3}
+      propertyPath: sounds.Array.data[2].name
+      value: Hit
+      objectReference: {fileID: 0}
+    - target: {fileID: 6072123316469052834, guid: ba2149c6d089c184cb5fc91e70bd22fe,
+        type: 3}
+      propertyPath: sounds.Array.data[2].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 2f312d3b3d2b3ff42a22f4f5eee65c3b, type: 3}
+    - target: {fileID: 6072123316469052834, guid: ba2149c6d089c184cb5fc91e70bd22fe,
+        type: 3}
+      propertyPath: sounds.Array.data[2].volume
+      value: 0.639
+      objectReference: {fileID: 0}
+    - target: {fileID: 6072123316469052834, guid: ba2149c6d089c184cb5fc91e70bd22fe,
+        type: 3}
+      propertyPath: sounds.Array.data[2].pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6072123316469052834, guid: ba2149c6d089c184cb5fc91e70bd22fe,
+        type: 3}
+      propertyPath: sounds.Array.data[0].name
+      value: Bounce
       objectReference: {fileID: 0}
     - target: {fileID: 6072123316469052835, guid: ba2149c6d089c184cb5fc91e70bd22fe,
         type: 3}
