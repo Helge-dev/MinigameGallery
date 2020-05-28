@@ -88,7 +88,7 @@ public class InputManager : MonoBehaviour
     /// <summary>
     /// True if the input manager listens to keyboard inputs
     /// </summary>
-    public bool GetIsKeyboard { get; private set; } = false;
+    public bool GetIsKeyboardManager { get; private set; } = false;
     /// <summary>
     /// DO NOT CALL!
     /// </summary>
@@ -101,9 +101,9 @@ public class InputManager : MonoBehaviour
     /// </summary>
     public void ListenToKeyboard()
     {
-        if (!GetIsKeyboard)
+        if (!GetIsKeyboardManager)
         {
-            GetIsKeyboard = true;
+            GetIsKeyboardManager = true;
             GameObject go = new GameObject();
             DontDestroyOnLoad(go);
             InputManager im = go.AddComponent<InputManager>();
@@ -179,7 +179,7 @@ public class InputManager : MonoBehaviour
 
     void OnMoveUp(InputValue value)
     {
-        if (GetIsKeyboard)
+        if (GetIsKeyboardManager)
         {
             for (int i = 0; i < keyboards.Count; i++)
             {
@@ -193,8 +193,7 @@ public class InputManager : MonoBehaviour
                 if (InputManagerKeyboard.KeyboardMoveUp(SetKeyboardID)) // If the key pressed is on the keyboard
                 {
                     movement.y = moveUp = value.Get<float>(); // Tell the keyboard to move up
-                }
-                else
+                } else if(!InputManagerKeyboard.KeyboardMoveDown(SetKeyboardID))
                 {
                     movement.y = moveUp = 0; // Tell the keyboard to move up
                 }
@@ -204,7 +203,7 @@ public class InputManager : MonoBehaviour
     }
     void OnMoveDown(InputValue value)
     {
-        if (GetIsKeyboard)
+        if (GetIsKeyboardManager)
         {
             for (int i = 0; i < keyboards.Count; i++)
             {
@@ -219,9 +218,9 @@ public class InputManager : MonoBehaviour
                 {
                     movement.y = moveDown = -value.Get<float>(); // Tell the keyboard to move down
                 }
-                else
+                else if (!InputManagerKeyboard.KeyboardMoveUp(SetKeyboardID))
                 {
-                    movement.y = moveDown = 0; // Tell the keyboard to move down
+                    movement.y = moveUp = 0; // Tell the keyboard to move up
                 }
             }
             else movement.y = moveDown = -value.Get<float>(); // Update variables
@@ -229,7 +228,7 @@ public class InputManager : MonoBehaviour
     }
     void OnMoveLeft(InputValue value)
     {
-        if (GetIsKeyboard)
+        if (GetIsKeyboardManager)
         {
             for (int i = 0; i < keyboards.Count; i++)
             {
@@ -244,7 +243,7 @@ public class InputManager : MonoBehaviour
                 {
                     movement.x = moveLeft = -value.Get<float>(); // Tell the keyboard to move down
                 }
-                else
+                else if(!InputManagerKeyboard.KeyboardMoveRight(SetKeyboardID))
                 {
                     movement.x = moveLeft = 0; // Tell the keyboard to move down
                 }
@@ -254,7 +253,7 @@ public class InputManager : MonoBehaviour
     }
     void OnMoveRight(InputValue value)
     {
-        if (GetIsKeyboard)
+        if (GetIsKeyboardManager)
         {
             for (int i = 0; i < keyboards.Count; i++)
             {
@@ -269,7 +268,7 @@ public class InputManager : MonoBehaviour
                 {
                     movement.x = moveRight = value.Get<float>(); // Tell the keyboard to move down
                 }
-                else
+                else if(!InputManagerKeyboard.KeyboardMoveLeft(SetKeyboardID))
                 {
                     movement.x = moveRight = 0; // Tell the keyboard to move down
                 }
@@ -280,7 +279,7 @@ public class InputManager : MonoBehaviour
     // On Misc Inputs
     void OnButtonSouth(InputValue value)
     {
-        if (GetIsKeyboard)
+        if (GetIsKeyboardManager)
         {
             for (int i = 0; i < keyboards.Count; i++)
             {
@@ -298,7 +297,7 @@ public class InputManager : MonoBehaviour
     }
     void OnButtonNorth(InputValue value)
     {
-        if (GetIsKeyboard)
+        if (GetIsKeyboardManager)
         {
             for (int i = 0; i < keyboards.Count; i++)
             {
@@ -316,7 +315,7 @@ public class InputManager : MonoBehaviour
     }
     void OnButtonEast(InputValue value)
     {
-        if (GetIsKeyboard)
+        if (GetIsKeyboardManager)
         {
             for (int i = 0; i < keyboards.Count; i++)
             {
@@ -334,7 +333,7 @@ public class InputManager : MonoBehaviour
     }
     void OnButtonWest(InputValue value)
     {
-        if (GetIsKeyboard)
+        if (GetIsKeyboardManager)
         {
             for (int i = 0; i < keyboards.Count; i++)
             {
@@ -352,7 +351,7 @@ public class InputManager : MonoBehaviour
     }
     void OnStart(InputValue value)
     {
-        if (GetIsKeyboard)
+        if (GetIsKeyboardManager)
         {
             for (int i = 0; i < keyboards.Count; i++)
             {
