@@ -50,7 +50,7 @@ public class PlayerColorManager : MonoBehaviour
     //Adjust text in the image in the UI of player with the playerIndex
     public void UpdateToNewPlayerImage(int playerIndex)
     {
-        Text[] text = images[playerIndex-1].GetComponentsInChildren<Text>();
+        Text[] text = images[playerIndex - 1].GetComponentsInChildren<Text>();
         foreach (Text t in text)
         {
             if (t.name == "Text (Join)")
