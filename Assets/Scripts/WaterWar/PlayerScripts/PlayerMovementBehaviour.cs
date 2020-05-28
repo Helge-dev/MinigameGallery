@@ -11,7 +11,6 @@ public class PlayerMovementBehaviour
                 gravity = 0.02f,
                 raycastForwardReach = 1f;
     float velocityY = 0;
-    
     /*
      * Methods 
      */
@@ -26,10 +25,16 @@ public class PlayerMovementBehaviour
     /// </summary>
     void DoPlayerMovementAndRotation(int playerID, CharacterController controller)
     {
+        Animator animator = controller.GetComponentInChildren<Animator>();
         Vector3 movement = DataStorage.GetSetControllers[playerID].GetMovement * moveForce;
         if (movement != Vector3.zero)
         {
+            animator.SetBool("Walking", true);
             controller.transform.rotation = Quaternion.Slerp(controller.transform.rotation, Quaternion.LookRotation(movement), rotationSpeed);
+        }
+        else
+        {
+            animator.SetBool("Walking", false);
         }
         if (controller.isGrounded)
         {
