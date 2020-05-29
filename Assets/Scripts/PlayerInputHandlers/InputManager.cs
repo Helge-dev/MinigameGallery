@@ -28,49 +28,60 @@ public class InputManager : MonoBehaviour
     public Vector3 GetMovement { get => new Vector3(movement.x, 0f, movement.y); }
     //Returns true if the related button is pressed
     /// <summary>
-    /// Returns true if the South button is pressed (Keyboard a)
+    /// Returns true if the South button is pressed on handcontrollers or keyboard
+    /// Tips:Call GetButtonSouthPressed to know which button the user has to press
     /// </summary>
     public bool GetButtonSouthPressed { get => buttonSouthDown && !buttonSouthPressedLastFrame; }
     /// <summary>
-    /// Returns true if the North button is pressed (Keyboard d)
+    /// Returns true if the North button is pressed on handcontrollers or keyboard
+    /// Tips:Call GetButtonNorthPressed to know which button the user has to press
     /// </summary>
     public bool GetButtonNorthPressed { get => buttonNorthDown && !buttonNorthPressedLastFrame; }
     /// <summary>
-    /// Returns true if the East button is pressed (Keyboard f)
+    /// Returns true if the East button is pressed on handcontrollers or keyboard
+    /// Tips:Call GetButtonEastPressed to know which button the user has to press
     /// </summary>
     public bool GetButtonEastPressed { get => buttonEastDown && !buttonEastPressedLastFrame; }
     /// <summary>
-    /// Returns true if the West button is pressed (Keyboard s)
+    /// Returns true if the West button is pressed on handcontrollers
+    /// Tips:Call GetButtonWestPressed to know which button the user has to press
     /// </summary>
     public bool GetButtonWestPressed { get => buttonWestDown && !buttonWestPressedLastFrame; }
     /// <summary>
-    /// Returns true if the Start button is pressed (Keyboard Enter)
+    /// Returns true if the Start button is pressed on handcontrollers or keyboard
+    /// Tips:Call GetButtonStartPressed to know which button the user has to press
     /// </summary>
     public bool GetButtonStartPressed { get => buttonStartDown && !buttonStartPressedLastFrame; }
     //Returns true if the related button is held down
     /// <summary>
-    /// Returns true if the South button is held down (Keyboard a)
+    /// Returns true if the South button is held down by handcontrollers or keyboard
+    /// Tips:Call GetButtonSouthPressed to know which button the user has to press
     /// </summary>
     public bool GetButtonSouthDown { get => buttonSouthDown; }
     /// <summary>
-    /// Returns true if the North button is held down (Keyboard d)
+    /// Returns true if the North button is held down by handcontrollers or keyboard
+    /// Tips:Call GetButtonNorthPressed to know which button the user has to press
     /// </summary>
     public bool GetButtonNorthDown { get => buttonNorthDown; }
     /// <summary>
-    /// Returns true if the East button is held down (Keyboard f)
+    /// Returns true if the East button is held down by handcontrollers or keyboard
+    /// Tips:Call GetButtonEastPressed to know which button the user has to press
     /// </summary>
     public bool GetButtonEastDown { get => buttonEastDown; }
     /// <summary>
-    /// Returns true if the West button is held down (Keyboard s)
+    /// Returns true if the West button is held down by handcontrollers or keyboard
+    /// Tips:Call GetButtonWestPressed to know which button the user has to press
     /// </summary>
     public bool GetButtonWestDown { get => buttonWestDown; }
     /// <summary>
-    /// Returns true if the Start button is held down (Keyboard Enter)
+    /// Returns true if the Start button is held down by handcontrollers or keyboard
+    /// Tips:Call GetButtonStartPressed to know which button the user has to press
     /// </summary>
     public bool GetButtonStartDown { get => buttonStartDown; }
     //Returns true if the player wants to move in a direction (For example in a menu)
     /// <summary>
-    /// Returns true if dpad/up is held down (Keyboard arrow/up)
+    /// Returns true if dpad/up is held down or keyboard move up key
+    /// Tips:Call GetKeyUsedToMoveUp to know which button the user has to press
     /// </summary>
     public virtual bool GetMoveUp { get => moveUp == 1; }
     /// <summary>
@@ -140,30 +151,58 @@ public class InputManager : MonoBehaviour
         return null;
     }
     /// <summary>
+    /// Returns a string with the key used by the player (For example "W" is walk forward)
+    /// </summary>
+    public string GetKeyUsedForNorthButton => SetKeyboardID == -1 ? "[Y/TRIANGLE]" : InputManagerKeyboard.KeyboardNorthButton(SetKeyboardID);
+    /// <summary>
+    /// Returns a string with the key used by the player (For example "W" is walk forward)
+    /// </summary>
+    public string GetKeyUsedForSouthButton => SetKeyboardID == -1 ? "[A/X]" : InputManagerKeyboard.KeyboardSouthButton(SetKeyboardID);
+    /// <summary>
+    /// Returns a string with the key used by the player (For example "W" is walk forward)
+    /// </summary>
+    public string GetKeyUsedForWestButton => SetKeyboardID == -1 ? "[X/SQUARE]" : InputManagerKeyboard.KeyboardWestButton(SetKeyboardID);
+    /// <summary>
+    /// Returns a string with the key used by the player (For example "W" is walk forward)
+    /// </summary>
+    public string GetKeyUsedForEastButton => SetKeyboardID == -1 ? "[B/CIRCLE]" : InputManagerKeyboard.KeyboardEastButton(SetKeyboardID);
+
+    /// <summary>
+    /// Returns a string with the key used by the player (For example "W" is walk forward)
+    /// </summary>
+    public string GetKeyUsedToMoveUp => SetKeyboardID == -1 ? "[Left Stick/Dpad Up]" : InputManagerKeyboard.KeyboardMoveUpButton(SetKeyboardID);
+    /// <summary>
+    /// Returns a string with the key used by the player (For example "W" is walk forward)
+    /// </summary>
+    public string GetKeyUsedToMoveDown => SetKeyboardID == -1 ? "[Left Stick/Dpad Down]" : InputManagerKeyboard.KeyboardMoveDownButton(SetKeyboardID);
+    /// <summary>
+    /// Returns a string with the key used by the player (For example "W" is walk forward)
+    /// </summary>
+    public string GetKeyUsedToMoveLeft => SetKeyboardID == -1 ? "[Left Stick/Dpad Left]" : InputManagerKeyboard.KeyboardMoveLeftButton(SetKeyboardID);
+    /// <summary>
+    /// Returns a string with the key used by the player (For example "W" is walk forward)
+    /// </summary>
+    public string GetKeyUsedToMoveRight => SetKeyboardID == -1 ? "[Left Stick/Dpad Right]" : InputManagerKeyboard.KeyboardMoveRightButton(SetKeyboardID);
+
+    /// <summary>
     /// Returns the input the player need to move
     /// </summary>
     /// <returns>A displayable string telling the input needed. For example. left stick</returns>
     public string GetRequiredKeyForMovement()
     {
         if (SetKeyboardID != -1) // If keyboard
-        {
-            return "Up: " + InputManagerKeyboard.KeyboardMoveUpButton(SetKeyboardID) + "\nDown: " + InputManagerKeyboard.KeyboardMoveDownButton(SetKeyboardID) + "\nLeft: " + InputManagerKeyboard.KeyboardMoveLeftButton(SetKeyboardID) + "\nRight: " + InputManagerKeyboard.KeyboardMoveRightButton(SetKeyboardID);
-        }
+            return "Movement [Keyboard]\nUp: " + GetKeyUsedToMoveUp + "\nDown: " + GetKeyUsedToMoveDown + "\nLeft: " + GetKeyUsedToMoveLeft + "\nRight: " + GetKeyUsedToMoveRight;
         else // If Hand Controller
-        {
-            return "Movement: Left Stick or Dpad";
-        }
+            return "Movement [Xbox / Playstation]\nLeft Stick or Dpad";
     }
     public string GetRequiredKeyForActions()
     {
+        string s = "";
         if (SetKeyboardID != -1) // If keyboard
-        {
-            return "Action 1: " + InputManagerKeyboard.KeyboardNorthButton(SetKeyboardID) + "\nAction 2: " + InputManagerKeyboard.KeyboardSouthButton(SetKeyboardID) + "\nAction 3: " + InputManagerKeyboard.KeyboardWestButton(SetKeyboardID) + "\nAction 4: " + InputManagerKeyboard.KeyboardEastButton(SetKeyboardID);
-        }
+            s = "Actions [Keyboard]";
         else // If Hand Controller
-        {
-            return "[Xbox/Playstation]\nAction 1:[A/X]\nAction 2:[X/SQUARE]\nAction 3:[Y/TRIANGLE]\nAction 4:[B/CIRCLE]";
-        }
+            s = "Actions [Xbox / Playstation]";
+        return s + "\nAction 1: " + GetKeyUsedForNorthButton + "\nAction 2: " + GetKeyUsedForSouthButton + "\nAction 3: " + GetKeyUsedForWestButton + "\nAction 4: " + GetKeyUsedForEastButton;
     }
     //After Update() is done, remember what buttons was pressed during the Update. (This is done to later know if the player is pressing or holding the button)
     private void LateUpdate()
