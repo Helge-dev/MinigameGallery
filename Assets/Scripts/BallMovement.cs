@@ -6,12 +6,13 @@ using System;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Experimental.Input.LowLevel;
+using System.Runtime.InteropServices.ComTypes;
 
 public class BallMovement : MonoBehaviour
 {
     public Rigidbody rb;
     public bool buttonState = true, hitOnce = true;
-    public float timer = 9999f, timeScale, timerText, timeBeforeReset = 5f;
+    float timer = 9999f, timeScale = 1, timeScaleForTimer = 1, timerText, timeBeforeReset = 5f, timerTextOut = 3f;
     public int rightEnd = 50, leftEnd = -50;
     int whoIsHitting;
     public bool left = true;
@@ -21,18 +22,18 @@ public class BallMovement : MonoBehaviour
     Material[] material = null;
     Renderer rend;
     [SerializeField]
-    Text playerRight, playerLeft, leftSideHit, rightSideHit;
+    Text buttonMenu, playerRight, playerLeft, leftSideHit, rightSideHit, playerOut;
     [SerializeField]
     BallCollision ballCollision = null;
     List<int> playerListLeft = new List<int>();
     List<int> playerListRight = new List<int>();
     Vector3 lastForce = Vector3.zero;
+    bool canRemove = true;
 
 
     //does things when scene starts
     void Start()
     {
-        
         rend = GetComponent<Renderer>();
         rend.enabled = true;
         rend.sharedMaterial = material[1];
@@ -56,13 +57,27 @@ public class BallMovement : MonoBehaviour
             }
             Console.WriteLine(playerListLeft.Count + playerListRight.Count);
         }
-
+        //buttonMenu.text = ;
         whoIsHitting = playerListLeft[0];
     }
     void Update()
     {
         Time.timeScale = timeScale;
         timerText -= Time.deltaTime;
+        timerTextOut -= Time.deltaTime;
+
+        Debug.Log(playerListLeft.Count);
+        Debug.Log(playerListRight.Count);
+        if (playerListLeft.Count == 0 && playerListRight.Count > 1)
+        {
+            playerListLeft.Add(playerListRight[playerListRight.Count - 1]);
+            playerListRight.RemoveAt(playerListRight.Count - 1);
+        }
+        if (playerListLeft.Count > 1 && playerListRight.Count == 0)
+        {
+            playerListRight.Add(playerListLeft[playerListLeft.Count - 1]);
+            playerListLeft.RemoveAt(playerListLeft.Count - 1);
+        }
 
         //Manages the "reset"
         if (resetGame)
@@ -81,6 +96,11 @@ public class BallMovement : MonoBehaviour
             
             leftSideHit.text = null;
             rightSideHit.text = null;
+        }
+
+        if(timerTextOut <= 0)
+        {
+            playerOut.text = null;
         }
 
         //Updates the UI to show everyone who's next 
@@ -123,23 +143,36 @@ public class BallMovement : MonoBehaviour
                 buttonState = false;
                 rend.sharedMaterial = material[0];
                 rb.velocity = lastForce;
+
+                timer = 9999;
+                if (left)
+                {
+                    playerOut.text = "Player " + playerListLeft[0] + " out! ";
+                    playerListLeft.RemoveAt(0);
+                }
+                else if (!left)
+                {
+                    
+                    playerOut.text = "Player " + playerListRight[0] + " out! ";
+                    playerListRight.RemoveAt(0); 
+                }
                 resetGame = true;
-                
+                //Reset();
+
             }
         }
 
         EndGame(playerListLeft, playerListRight, ballCollision.nrOfBouncesBad, 1);
         EndGame(playerListRight, playerListLeft, ballCollision.nrOfBouncesGood, 2);
 
-
         //These are the 4 different "hits" you can go and their values
         if ((Input.GetKey("1") || DataStorage.GetSetControllers[whoIsHitting].GetButtonEastPressed ) && buttonState == true)
         {
-            Hit(1000, 800, "Normal Hit", 10);
+            Hit(1100, 800, "Normal Hit", 10);
         }
         if ((Input.GetKey("2") || DataStorage.GetSetControllers[whoIsHitting].GetButtonSouthPressed) && buttonState == true)
         {
-            Hit(825, 1400, "High Hit", 15);
+            Hit(800, 1400, "High Hit", 15);
         }
         if ((Input.GetKey("3") || DataStorage.GetSetControllers[whoIsHitting].GetButtonWestPressed) && buttonState == true)
         {
@@ -166,11 +199,13 @@ public class BallMovement : MonoBehaviour
         {
             rb.AddForce(-x, y, 0);
             rightSideHit.text = hitType;
-            leftSideHit.transform.eulerAngles = new Vector3(0, 0, zr);
+            rightSideHit.transform.eulerAngles = new Vector3(0, 0, zr);
         }
 
         AfterHit();
     }
+
+
 
     //this method manages everyhing that happens after the ball has been hit. Also manages the queues for the players
     public void AfterHit()
@@ -183,9 +218,10 @@ public class BallMovement : MonoBehaviour
         rend.sharedMaterial = material[0];
         timer = 3;
         timeScale += 0.1f;
+        timeScaleForTimer += 0.05f;
+        timer = 3f * timeScaleForTimer;
         ballCollision.nrOfBouncesGood = 0;
         ballCollision.nrOfBouncesBad = 0;
-        Debug.Log("Player nr: " + whoIsHitting + " is Hitting");
     }
 
     //Resets the ball when a player is removed from the match
@@ -193,12 +229,17 @@ public class BallMovement : MonoBehaviour
     {
         rb.transform.position = new Vector3(-50, 10, 0);
         rb.velocity = Vector3.zero;
+        lastForce = Vector3.zero;
         rb.useGravity = false;
         buttonState = true;
         hitOnce = true;
         rend.sharedMaterial = material[1];
         timeBeforeReset = 5f;
-        timer = 3;
+        timer = 9999;
+        ballCollision.nrOfBouncesGood = 0;
+        ballCollision.nrOfBouncesBad = 0;
+        left = true;
+        canRemove = true;
     }
 
     public void QueueHandler()
@@ -224,18 +265,12 @@ public class BallMovement : MonoBehaviour
         {
             if (left)
             {
-                //PlayerListRight.Add(PlayerListLeft[0]);
-                //PlayerListLeft.RemoveAt(0);
-
                 if(playerListRight.Count > 0)
                     whoIsHitting = playerListRight[0];
                 left = false;
             }
             else
             {
-                //PlayerListLeft.Add(PlayerListRight[0]);
-                //PlayerListRight.RemoveAt(0);
-
                 if(playerListRight.Count > 0)
                     whoIsHitting = playerListLeft[0];
                 left = true;
@@ -243,20 +278,18 @@ public class BallMovement : MonoBehaviour
         }
     }
 
-    //Sens the winner to "CommonCommands" or removes players from the list if there are more than 2 players left
+    //Sends the winner to "CommonCommands" or removes players from the list if there are more than 2 players left
     public void EndGame(List<int> firstList, List<int> secondList, int bounces, int howMany)
     {
         if ((bounces >= howMany))
         {
-            rb.useGravity = true;
-            buttonState = false;
-            rend.sharedMaterial = material[0];
-            if (playerListLeft.Count <= 1 && playerListRight.Count <= 1 && canEnd)
+            //fixa så att spelet inte avslutar när det är 2 kvar
+            if ((playerListLeft.Count + playerListRight.Count) <= 2 && canEnd)
             {
+                Time.timeScale = 1;
                 if (left)
                 {
                     CommonCommands.NextGame(firstList, secondList);
-
                 }
                 else if (!left)
                 {
@@ -264,20 +297,44 @@ public class BallMovement : MonoBehaviour
                 }
                 canEnd = false;
             }
-            else if (canEnd)
+            else if (canEnd && canRemove)
             {
+                canRemove = false;
                 if (left)
                 {
-                    playerListLeft.RemoveAt(playerListLeft.Count - 1);
+                    timerTextOut = 4f;
+                    if(howMany == 1)
+                    {
+                        playerOut.text = "Player " + playerListLeft[playerListLeft.Count - 1] + " out! ";
+                        playerListLeft.RemoveAt(playerListLeft.Count - 1);
+                    }
+                    else if (howMany == 2)
+                    {
+                        playerOut.text = "Player " + playerListLeft[0] + " out! ";
+                        playerListLeft.RemoveAt(0);
+                    }
                 }
                 else if (!left)
                 {
-                    playerListRight.RemoveAt(playerListRight.Count - 1);
+                    timerTextOut = 4f;
+                    //playerOut.text = "Player " + playerListRight[playerListRight.Count - 1] + " out! ";
+                    if (howMany == 1)
+                    {
+                        playerOut.text = "Player " + playerListRight[playerListRight.Count - 1] + " out! ";
+                        playerListRight.RemoveAt(playerListRight.Count - 1);
+                    }
+                    else if (howMany == 2)
+                    {
+                        playerOut.text = "Player " + playerListRight[0] + " out! ";
+                        playerListRight.RemoveAt(0);
+                    }
                 }
+                resetGame = true;
             }
-
-            resetGame = true;
-
+            if (howMany == 2)
+                ballCollision.nrOfBouncesGood = 0;
+            else if (howMany == 1)
+                ballCollision.nrOfBouncesBad = 0;
         }
     }
 }
