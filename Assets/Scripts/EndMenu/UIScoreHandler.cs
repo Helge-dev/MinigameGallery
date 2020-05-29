@@ -38,7 +38,7 @@ public class UIScoreHandler : MonoBehaviour
                 if (DataStorage.GetSetScore[player] == score)
                 {
                     //Add the players score to the text field
-                    scoreFields[player - 1].text = textToPlace + " " + DataStorage.GetSetControllers[player].name + "       " + score; //Add text to label
+                    scoreFields[player - 1].text = textToPlace + " P" + player + "       " + score; //Add text to label
                     scoreFields[player - 1].transform.localPosition = new Vector3(0,defaultY - (scoreFields[player - 1].preferredHeight)*scoreTextPlaced); //Move label
                     scoreTextPlaced++;
                 } 
