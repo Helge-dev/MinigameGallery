@@ -11,7 +11,7 @@ public class BallMovement : MonoBehaviour
 {
     public Rigidbody rb;
     public bool buttonState = true, hitOnce = true;
-    public float timer = 9999f, timeScale, timerText, timeBeforeReset = 5f;
+    public float timer = 9999f, timeScale = 1, timeScaleForTimer = 1, timerText, timeBeforeReset = 5f, timerTextOut = 3f;
     public int rightEnd = 50, leftEnd = -50;
     int whoIsHitting;
     public bool left = true;
@@ -21,7 +21,7 @@ public class BallMovement : MonoBehaviour
     Material[] material = null;
     Renderer rend;
     [SerializeField]
-    Text playerRight, playerLeft, leftSideHit, rightSideHit;
+    Text playerRight, playerLeft, leftSideHit, rightSideHit, playerOut;
     [SerializeField]
     BallCollision ballCollision = null;
     List<int> playerListLeft = new List<int>();
@@ -63,7 +63,6 @@ public class BallMovement : MonoBehaviour
     {
         Time.timeScale = timeScale;
         timerText -= Time.deltaTime;
-
         //Manages the "reset"
         if (resetGame)
         {
@@ -81,6 +80,10 @@ public class BallMovement : MonoBehaviour
             
             leftSideHit.text = null;
             rightSideHit.text = null;
+        }
+        if(timerTextOut <= 0)
+        {
+            playerOut.text = null;
         }
 
         //Updates the UI to show everyone who's next 
@@ -135,11 +138,11 @@ public class BallMovement : MonoBehaviour
         //These are the 4 different "hits" you can go and their values
         if ((Input.GetKey("1") || DataStorage.GetSetControllers[whoIsHitting].GetButtonEastPressed ) && buttonState == true)
         {
-            Hit(1000, 800, "Normal Hit", 10);
+            Hit(1100, 800, "Normal Hit", 10);
         }
         if ((Input.GetKey("2") || DataStorage.GetSetControllers[whoIsHitting].GetButtonSouthPressed) && buttonState == true)
         {
-            Hit(825, 1400, "High Hit", 15);
+            Hit(800, 1400, "High Hit", 15);
         }
         if ((Input.GetKey("3") || DataStorage.GetSetControllers[whoIsHitting].GetButtonWestPressed) && buttonState == true)
         {
@@ -166,7 +169,7 @@ public class BallMovement : MonoBehaviour
         {
             rb.AddForce(-x, y, 0);
             rightSideHit.text = hitType;
-            leftSideHit.transform.eulerAngles = new Vector3(0, 0, zr);
+            rightSideHit.transform.eulerAngles = new Vector3(0, 0, zr);
         }
 
         AfterHit();
@@ -183,6 +186,8 @@ public class BallMovement : MonoBehaviour
         rend.sharedMaterial = material[0];
         timer = 3;
         timeScale += 0.1f;
+        timeScaleForTimer += 0.05f;
+        timer = 3f; //* timeScaleForTimer;
         ballCollision.nrOfBouncesGood = 0;
         ballCollision.nrOfBouncesBad = 0;
         Debug.Log("Player nr: " + whoIsHitting + " is Hitting");
@@ -198,7 +203,8 @@ public class BallMovement : MonoBehaviour
         hitOnce = true;
         rend.sharedMaterial = material[1];
         timeBeforeReset = 5f;
-        timer = 3;
+        timer = 3f;// * timeScaleForTimer;
+        //left = true;
     }
 
     public void QueueHandler()
@@ -268,10 +274,14 @@ public class BallMovement : MonoBehaviour
             {
                 if (left)
                 {
+                    timerTextOut = 4f;
+                    playerOut.text = "Player " + playerListLeft[playerListLeft.Count - 1] + " out! ";
                     playerListLeft.RemoveAt(playerListLeft.Count - 1);
                 }
                 else if (!left)
                 {
+                    timerTextOut = 4f;
+                    playerOut.text = "Player " + playerListRight[playerListRight.Count - 1] + " out! ";
                     playerListRight.RemoveAt(playerListRight.Count - 1);
                 }
             }
