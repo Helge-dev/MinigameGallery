@@ -42,8 +42,8 @@ public class GrabMovement
             controller.center = new Vector3(0, 0.2f, 0.2f);
             controller.radius = controller.radius * 2.5f;
             GetSetIsGrabbing = true;
-            this.grabbingObjID = grabbingObj.GetComponent<PlayerBehaviour>().GetSetPlayerID;
-            this.grabbedObjID = grabbedObj.GetComponent<PlayerBehaviour>().GetSetPlayerID;
+            grabbingObjID = grabbingObj.GetComponent<PlayerBehaviour>().GetSetPlayerID;
+            grabbedObjID = grabbedObj.GetComponent<PlayerBehaviour>().GetSetPlayerID;
             firstPositionLastUpdate = grabbingObj.transform.position;
             secondPositionLastUpdate = grabbedObj.transform.position;
             // Change parent transform of players
@@ -68,14 +68,14 @@ public class GrabMovement
         //They jump together
         if (movement != Vector3.zero)
         {
-            //grabbingObjAnimator.SetBool("Walking", true);
-            //grabbedObjAnimator.SetBool("Walking", false);
+            grabbingObjAnimator.SetBool("Walking", true);
+            grabbedObjAnimator.SetBool("Walking", true);
             controller.transform.rotation = Quaternion.Slerp(controller.transform.rotation, Quaternion.LookRotation(movement), rotationSpeed);
         }
         else
         {
-            //grabbingObjAnimator.SetBool("Walking", false);
-            //grabbedObjAnimator.SetBool("Walking", false);
+            grabbingObjAnimator.SetBool("Walking", false);
+            grabbedObjAnimator.SetBool("Walking", false);
         }
         if (controller.isGrounded)
         {

@@ -34,6 +34,7 @@ public class PlayerBehaviour : MonoBehaviour
         {
             gameObject.SetActive(!value);
             outOfGame = value;
+            UIManager.SetDisplayedPlayerOut = GetSetPlayerID;
         }
     }
     /// <summary>
@@ -52,25 +53,10 @@ public class PlayerBehaviour : MonoBehaviour
      */
     void Update()
     {
-        if (GetSetPlayerOutOfGame) //If player out of game
+        if (!GetSetPlayerOutOfGame) //If player in game
         {
-            PlayerOutOfGameUpdate();
+            actionManager.DoActionUpdate(GetSetPlayerID, controller, ref waterMeter); // Check if the player is doing a action
         }
-        else //If player in game
-        {
-            PlayerInGameUpdate();
-        }
-    }
-    /// <summary>
-    /// The update when the player is out of the game
-    /// </summary>
-    void PlayerOutOfGameUpdate() {}
-    /// <summary>
-    /// The update when the player is in game
-    /// </summary>
-    void PlayerInGameUpdate()
-    {
-        actionManager.DoActionUpdate(GetSetPlayerID, controller, ref waterMeter);
     }
     void FixedUpdate()
     {
@@ -78,7 +64,7 @@ public class PlayerBehaviour : MonoBehaviour
         {
             movementG.DoMovementUpdate(); // Do Grabbed Movement
         }
-        else if(!movementG.GetSetIsGrabbed)
+        else if(!movementG.GetSetIsGrabbed) // If not grabbed or grabbing
         {
             movementB.DoMovementUpdate(GetSetPlayerID, controller); //Do Normal Movement
         }
