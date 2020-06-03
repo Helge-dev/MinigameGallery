@@ -64,10 +64,21 @@ public class PlayerActionManager : MonoBehaviour
     }
     void UpdateInteractionWithObjects(CharacterController controller, RaycastHit info, int playerID)
     {
-        if (info.collider.tag == "PlayerInteractable")
+        switch (info.collider.tag)
         {
-            GameWorldObject wObject = info.collider.GetComponent<GameWorldObject>();
-            wObject.Interact(controller);
+            case "PlayerInteractable":
+                GameWorldObject wObject = info.collider.GetComponent<GameWorldObject>();
+                wObject.Interact(controller);
+                break;
+            case "Player":
+                if (DataStorage.GetSetControllers[playerID].GetButtonNorthPressed) // If the button was pressed
+                {
+                    GetComponent<PlayerBehaviour>().ToggleGrab(info.collider.GetComponent<PlayerBehaviour>().gameObject);
+                }
+                break;
+            case "Damageable":
+                info.collider.transform.parent.GetComponent<PlayerBehaviour>().GetSetPlayerOutOfGame = true;
+                break;
         }
     }
 }

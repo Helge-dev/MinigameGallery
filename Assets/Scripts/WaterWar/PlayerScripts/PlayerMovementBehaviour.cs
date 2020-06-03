@@ -8,8 +8,7 @@ public class PlayerMovementBehaviour
     const float jumpForce = 0.2f,
                 moveForce = 0.1f,
                 rotationSpeed = 0.2f,
-                gravity = 0.02f,
-                raycastForwardReach = 1f;
+                gravity = 0.02f;
     float velocityY = 0;
     /*
      * Methods 

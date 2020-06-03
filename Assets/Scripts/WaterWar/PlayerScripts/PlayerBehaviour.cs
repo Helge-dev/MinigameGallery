@@ -13,6 +13,7 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField] CharacterController controller = null; //PlayerObjects Rigidbody used for physics
     [SerializeField] PlayerActionManager actionManager = null; //Action Manager class
     readonly PlayerMovementBehaviour movementB = new PlayerMovementBehaviour(); //Movement Manager class
+    readonly GrabMovement movementG = new GrabMovement();
     const int waterMeterMax = 10; // Max value of Water Meter
     int waterMeter = waterMeterMax; // Water Meter value
     bool outOfGame = false; // If player is out of game
@@ -73,7 +74,30 @@ public class PlayerBehaviour : MonoBehaviour
     }
     void FixedUpdate()
     {
-        movementB.DoMovementUpdate(GetSetPlayerID, controller); //Do Movement
+        if (movementG.GetSetIsGrabbing) // If grabbed or is grabbing
+        {
+            movementG.DoMovementUpdate(); // Do Grabbed Movement
+        }
+        else if(!movementG.GetSetIsGrabbed)
+        {
+            movementB.DoMovementUpdate(GetSetPlayerID, controller); //Do Normal Movement
+        }
     }
     public void FillWaterMeter() => actionManager.FillWaterMeter(ref waterMeter);
+    public void ToggleGrab(GameObject grabbedObject)
+    {
+        grabbedObject.GetComponent<PlayerBehaviour>().ToggleIsGrabbed();
+        if (movementG.GetSetIsGrabbing)
+        {
+            movementG.StopGrabbing();
+        }
+        else
+        {
+            movementG.StartMovement(gameObject, grabbedObject);
+        }
+    }
+    public void ToggleIsGrabbed()
+    {
+        movementG.GetSetIsGrabbed = !movementG.GetSetIsGrabbed;
+    }
 }
