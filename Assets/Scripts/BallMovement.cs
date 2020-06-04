@@ -22,14 +22,13 @@ public class BallMovement : MonoBehaviour
     Material[] material = null;
     Renderer rend;
     [SerializeField]
-    Text playerRight, playerLeft, leftSideHit, rightSideHit, playerOut;
+    Text buttonMenu, playerRight, playerLeft, leftSideHit, rightSideHit, playerOut;
     [SerializeField]
     BallCollision ballCollision = null;
     List<int> playerListLeft = new List<int>();
     List<int> playerListRight = new List<int>();
     Vector3 lastForce = Vector3.zero;
     bool canRemove = true;
-    bool twoLeft = false;
 
 
     //does things when scene starts
@@ -169,11 +168,11 @@ public class BallMovement : MonoBehaviour
         //These are the 4 different "hits" you can go and their values
         if ((Input.GetKey("1") || DataStorage.GetSetControllers[whoIsHitting].GetButtonEastPressed ) && buttonState == true)
         {
-            Hit(1100, 800, "Normal", 10);
+            Hit(1100, 800, "Normal Hit", 10);
         }
         if ((Input.GetKey("2") || DataStorage.GetSetControllers[whoIsHitting].GetButtonSouthPressed) && buttonState == true)
         {
-            Hit(800, 1400, "High", 15);
+            Hit(800, 1400, "High Hit", 15);
         }
         if ((Input.GetKey("3") || DataStorage.GetSetControllers[whoIsHitting].GetButtonWestPressed) && buttonState == true)
         {
@@ -181,7 +180,7 @@ public class BallMovement : MonoBehaviour
         }
         if ((Input.GetKey("4") || DataStorage.GetSetControllers[whoIsHitting].GetButtonNorthPressed) && buttonState == true)
         {
-            Hit(600, 800, "Low", -5);
+            Hit(600, 800, "Low Hit", -5);
         }
 
     }
@@ -201,7 +200,6 @@ public class BallMovement : MonoBehaviour
             rb.AddForce(-x, y, 0);
             rightSideHit.text = hitType;
             rightSideHit.transform.eulerAngles = new Vector3(0, 0, zr);
-           
         }
 
         AfterHit();
@@ -242,8 +240,6 @@ public class BallMovement : MonoBehaviour
         ballCollision.nrOfBouncesBad = 0;
         left = true;
         canRemove = true;
-        if ((playerListLeft.Count + playerListRight.Count) <= 2)
-            twoLeft = true;
     }
 
     public void QueueHandler()
@@ -288,24 +284,16 @@ public class BallMovement : MonoBehaviour
         if ((bounces >= howMany))
         {
             //fixa så att spelet inte avslutar när det är 2 kvar
-            if ((playerListLeft.Count + playerListRight.Count) <= 2 && canEnd && twoLeft)
+            if ((playerListLeft.Count + playerListRight.Count) <= 2 && canEnd)
             {
-                
                 Time.timeScale = 1;
-                timeScale = 1f;
                 if (left)
                 {
-                    if(ballCollision.nrOfBouncesGood > 1)
-                        CommonCommands.NextGame(firstList, secondList);
-                    else if (ballCollision.nrOfBouncesBad > 0)
-                        CommonCommands.NextGame(firstList, secondList);
+                    CommonCommands.NextGame(firstList, secondList);
                 }
                 else if (!left)
                 {
-                    if (ballCollision.nrOfBouncesGood > 1)
-                        CommonCommands.NextGame(secondList, firstList);
-                    else if (ballCollision.nrOfBouncesBad > 0)
-                        CommonCommands.NextGame(secondList, firstList);
+                    CommonCommands.NextGame(secondList, firstList);
                 }
                 canEnd = false;
             }
@@ -329,6 +317,7 @@ public class BallMovement : MonoBehaviour
                 else if (!left)
                 {
                     timerTextOut = 4f;
+                    //playerOut.text = "Player " + playerListRight[playerListRight.Count - 1] + " out! ";
                     if (howMany == 1)
                     {
                         playerOut.text = "Player " + playerListRight[playerListRight.Count - 1] + " out! ";
