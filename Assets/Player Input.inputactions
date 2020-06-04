@@ -169,7 +169,7 @@
                 },
                 {
                     "name": "",
-                    "path": "<Keyboard>/0",
+                    "path": "<Keyboard>/equals",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -253,7 +253,7 @@
                 },
                 {
                     "name": "",
-                    "path": "<Keyboard>/9",
+                    "path": "<Keyboard>/minus",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -337,7 +337,7 @@
                 },
                 {
                     "name": "",
-                    "path": "<Keyboard>/minus",
+                    "path": "<Keyboard>/backspace",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -421,7 +421,7 @@
                 },
                 {
                     "name": "",
-                    "path": "<Keyboard>/8",
+                    "path": "<Keyboard>/0",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",

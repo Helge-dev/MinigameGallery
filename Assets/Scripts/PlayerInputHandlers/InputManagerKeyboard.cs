@@ -8,10 +8,10 @@ public static class InputManagerKeyboard
     static readonly KeyControl[] leftKeys = { Keyboard.current.aKey, Keyboard.current.fKey, Keyboard.current.jKey, Keyboard.current.semicolonKey, Keyboard.current.leftArrowKey };
     static readonly KeyControl[] rightKeys = { Keyboard.current.dKey, Keyboard.current.hKey, Keyboard.current.lKey, Keyboard.current.backslashKey, Keyboard.current.rightArrowKey };
 
-    static readonly KeyControl[] northKey = { Keyboard.current.slashKey, Keyboard.current.minusKey, Keyboard.current.digit3Key, Keyboard.current.digit7Key, Keyboard.current.vKey };
-    static readonly KeyControl[] southKey = { Keyboard.current.periodKey, Keyboard.current.digit0Key, Keyboard.current.digit2Key, Keyboard.current.digit6Key, Keyboard.current.cKey };
-    static readonly KeyControl[] westKey = { Keyboard.current.commaKey, Keyboard.current.digit9Key, Keyboard.current.digit1Key, Keyboard.current.digit5Key, Keyboard.current.xKey };
-    static readonly KeyControl[] eastKey = { Keyboard.current.mKey, Keyboard.current.digit8Key, Keyboard.current.backquoteKey, Keyboard.current.digit4Key, Keyboard.current.zKey };
+    static readonly KeyControl[] northKey = { Keyboard.current.slashKey, Keyboard.current.backspaceKey, Keyboard.current.digit3Key, Keyboard.current.digit7Key, Keyboard.current.vKey };
+    static readonly KeyControl[] southKey = { Keyboard.current.periodKey, Keyboard.current.equalsKey, Keyboard.current.digit2Key, Keyboard.current.digit6Key, Keyboard.current.cKey };
+    static readonly KeyControl[] westKey = { Keyboard.current.commaKey, Keyboard.current.minusKey, Keyboard.current.digit1Key, Keyboard.current.digit5Key, Keyboard.current.xKey };
+    static readonly KeyControl[] eastKey = { Keyboard.current.mKey, Keyboard.current.digit0Key, Keyboard.current.backquoteKey, Keyboard.current.digit4Key, Keyboard.current.zKey };
 
     static readonly KeyControl[] startKey = { Keyboard.current.qKey, Keyboard.current.rKey, Keyboard.current.uKey, Keyboard.current.pKey, Keyboard.current.rightShiftKey };
 
@@ -57,6 +57,8 @@ public static class InputManagerKeyboard
             return "plus";
         else if (c.name == "backquote")
             return "§";
+        else if (c.name == "equals")
+            return "´";
         return c.name;
     }
 }

@@ -28,6 +28,7 @@ public class GrabMovement
     {
         if (GetSetIsGrabbing)
         {
+            grabbedObj.GetComponent<PlayerBehaviour>().ToggleIsGrabbed();
             grabbedObj.transform.SetParent(secondObjDefaultTransform);
             GetSetIsGrabbing = false;
             controller.center = new Vector3(0, 0.2f, -0.2f);
@@ -38,6 +39,7 @@ public class GrabMovement
     {
         if (!GetSetIsGrabbed)
         {
+            grabbedObj.GetComponent<PlayerBehaviour>().ToggleIsGrabbed();
             controller = grabbingObj.GetComponent<CharacterController>();
             controller.center = new Vector3(0, 0.2f, 0.2f);
             controller.radius = controller.radius * 2.5f;
@@ -64,7 +66,6 @@ public class GrabMovement
         Vector3 movement = DataStorage.GetSetControllers[grabbingObjID].GetMovement + DataStorage.GetSetControllers[grabbedObjID].GetMovement;
         movement.Normalize();
         movement *= moveForce;
-        Debug.Log(movement);
         //They jump together
         if (movement != Vector3.zero)
         {
@@ -89,5 +90,9 @@ public class GrabMovement
             velocityY -= gravity;
         }
         controller.Move(movement + new Vector3(0, velocityY, 0));
+        if (DataStorage.GetSetControllers[grabbedObjID].GetButtonNorthPressed)
+        {
+            StopGrabbing();
+        }
     }
 }

@@ -32,6 +32,10 @@ public class PlayerBehaviour : MonoBehaviour
         }
         set
         {
+            if (movementG.GetSetIsGrabbing)
+            {
+                movementG.StopGrabbing();
+            }
             gameObject.SetActive(!value);
             outOfGame = value;
             UIManager.SetDisplayedPlayerOut = GetSetPlayerID;
@@ -60,11 +64,11 @@ public class PlayerBehaviour : MonoBehaviour
     }
     void FixedUpdate()
     {
-        if (movementG.GetSetIsGrabbing) // If grabbed or is grabbing
+        if (movementG.GetSetIsGrabbing) // If grabbing
         {
             movementG.DoMovementUpdate(); // Do Grabbed Movement
         }
-        else if(!movementG.GetSetIsGrabbed) // If not grabbed or grabbing
+        else if (!movementG.GetSetIsGrabbed) // If not grabbed or grabbing
         {
             movementB.DoMovementUpdate(GetSetPlayerID, controller); //Do Normal Movement
         }
@@ -72,7 +76,6 @@ public class PlayerBehaviour : MonoBehaviour
     public void FillWaterMeter() => actionManager.FillWaterMeter(ref waterMeter);
     public void ToggleGrab(GameObject grabbedObject)
     {
-        grabbedObject.GetComponent<PlayerBehaviour>().ToggleIsGrabbed();
         if (movementG.GetSetIsGrabbing)
         {
             movementG.StopGrabbing();

@@ -77,7 +77,7 @@ public class MainMenu : MonoBehaviour
     //Starts the first game
     public void StartGame()
     {
-        if (DataStorage.GetSetControllers.Count > 0) //If more than one player is connected
+        if (DataStorage.GetSetControllers.Count > 1) //If more than one player is connected
         {
             //Prepare the game loop
             DataStorage.AmountOfGames = DataStorage.GetSetGamesLeft = int.Parse(amountOfRoundsText.text);
