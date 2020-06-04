@@ -7,7 +7,7 @@ using UnityEngine.UI;
  */
 public class MainMenu : MonoBehaviour
 {
-    [SerializeField] GameObject[] selectableUIMenuObjects = new GameObject[3]; // Selectable UI Components (Buttons, etc)
+    [SerializeField] GameObject[] selectableUIMenuObjects = new GameObject[4]; // Selectable UI Components (Buttons, etc)
     [SerializeField] GameObject[] selectableUIOptionsObjects = new GameObject[2]; // Selectable UI Components (Buttons, etc)
     [SerializeField] Text amountOfRoundsText;
     const int amountOfRoundsMaxValue = 10;
@@ -140,5 +140,9 @@ public class MainMenu : MonoBehaviour
     public void ToggleFullscreen()
     {
         Screen.fullScreen = !Screen.fullScreen;
+    }
+    public void ExitGame()
+    {
+        Application.Quit();
     }
 }
