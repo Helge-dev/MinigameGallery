@@ -6,7 +6,7 @@ using UnityEngine.Experimental.Input.Plugins.PlayerInput;
 public class PlayerJoinManager : MonoBehaviour
 {
     string keyboardKeySchemeName = "Keyboard";
-    [SerializeField] PlayerColorManager colorManager = null;
+    [SerializeField] PlayerColorManager colorManager;
     static InputManager keyboardManager = null;
     void OnPlayerJoined(PlayerInput input)
     {
