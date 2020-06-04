@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 /*
  * Made by Helge Herrström
  */
 public class MainMenu : MonoBehaviour
 {
-    [SerializeField] GameObject[] selectableUIMenuObjects = new GameObject[4]; // Selectable UI Components (Buttons, etc)
+    [SerializeField] GameObject[] selectableUIMenuObjects = new GameObject[3]; // Selectable UI Components (Buttons, etc)
     [SerializeField] GameObject[] selectableUIOptionsObjects = new GameObject[2]; // Selectable UI Components (Buttons, etc)
     [SerializeField] Text amountOfRoundsText;
     const int amountOfRoundsMaxValue = 10;
@@ -97,25 +96,17 @@ public class MainMenu : MonoBehaviour
         }
     }
     //Find scenes that can be played up to four players and put them into the game loop as a minigame
-    void FindFourPlayerScenes() => AddPlayableScenesByPlayerCount(false);
+    void FindFourPlayerScenes() => AddPlayableScenesFromDirectory(fourPlayerScenesPath);
     //Find scenes that can be played up to eight players and put the into the game loop as a minigame
-    void FindEightPlayerScenes() => AddPlayableScenesByPlayerCount(true);
+    void FindEightPlayerScenes() => AddPlayableScenesFromDirectory(eightPlayerScenesPath);
     //Add scenes inside a path into playable scenes that may be picked by the game loop as a minigame
-    void AddPlayableScenesByPlayerCount(bool eightPlayerGames)
+    void AddPlayableScenesFromDirectory(string foldierPath)
     {
-        if (eightPlayerGames)
+        foreach (string path in System.IO.Directory.GetFiles(Application.dataPath + foldierPath, "*.unity"))
         {
-            foreach (string s in DataStorage.GetEightPlayerGames)
-            {
-                DataStorage.GetSetPlayableGames.Add(s);
-            }
-        }
-        else
-        {
-            foreach (string s in DataStorage.GetFourPlayerGames)
-            {
-                DataStorage.GetSetPlayableGames.Add(s);
-            }
+            //Add the scene (And make it readable for unity)
+            string directory = path.Replace(".unity", "").Replace('\\', '/').Replace(Application.dataPath, "").TrimStart('/');
+            DataStorage.GetSetPlayableGames.Add(directory); 
         }
     }
     //Hide Option Items and show Menu
@@ -149,9 +140,5 @@ public class MainMenu : MonoBehaviour
     public void ToggleFullscreen()
     {
         Screen.fullScreen = !Screen.fullScreen;
-    }
-    public void ExitGame()
-    {
-        Application.Quit();
     }
 }

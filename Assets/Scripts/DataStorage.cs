@@ -7,8 +7,6 @@ using UnityEngine;
 
 public static class DataStorage
 {
-    readonly static string[] eightPlayerGames = { "WaterWar", "Table Tennis" },
-                             fourPlayerGames = { };
     /*
      * Variables
      */
@@ -22,8 +20,6 @@ public static class DataStorage
     /*
      * Properties
      */
-    public static string[] GetEightPlayerGames { get => eightPlayerGames; }
-    public static string[] GetFourPlayerGames { get => fourPlayerGames; }
     /// <summary>
     /// Returns how many games are left to play
     /// </summary>

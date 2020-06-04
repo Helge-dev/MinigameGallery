@@ -12,7 +12,6 @@ public class PlayerColorManager : MonoBehaviour
         for (int count = 0; count < DataStorage.GetSetControllers.Count; count++)
         {
             images[count].color = DataStorage.GetSetPlayerColor[count + 1];
-            UpdateToNewPlayerImage(count + 1);
         }
     }
     //Changes a players color to a random color
@@ -56,27 +55,10 @@ public class PlayerColorManager : MonoBehaviour
         {
             if (t.name == "Text (Join)")
             {
-                t.text = ""; // Remove text
-            }
-            else if (t.name == "Text (Player)")
+                t.text = ""; //Remove text
+            } else if (t.name == "Text (Player)")
             {
                 t.color = Color.white; //Change text color
-            }
-            else if (t.name == "Text (Action)")
-            {
-                t.text = DataStorage.GetSetControllers[playerIndex].GetRequiredKeyForActions(); //Replace text
-            }
-            else if (t.name == "Text (Movement)")
-            {
-                t.text = DataStorage.GetSetControllers[playerIndex].GetRequiredKeyForMovement(); //Replace text
-            }
-        }
-        Image[] image = images[playerIndex - 1].GetComponentsInChildren<Image>();
-        foreach (Image i in image)
-        {
-            if (i.name == "Image (TextBackground)")
-            {
-                i.color = new Color(0,0,0, 0.9f);
             }
         }
     }
