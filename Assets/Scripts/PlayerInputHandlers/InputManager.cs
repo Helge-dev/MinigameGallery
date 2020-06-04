@@ -200,7 +200,7 @@ public class InputManager : MonoBehaviour
         if (SetKeyboardID != -1) // If keyboard
             return "Movement [Keyboard]\nUp: " + GetKeyUsedToMoveUp + "\nDown: " + GetKeyUsedToMoveDown + "\nLeft: " + GetKeyUsedToMoveLeft + "\nRight: " + GetKeyUsedToMoveRight;
         else // If Controller
-            return "Movement [Xbox / Playstation]\nLeft Stick or Dpad";
+            return "Movement [Gamepad]\nLeft Stick or Dpad";
     }
     /// <summary>
     /// Returns detailed information about the action keys the user is assigned to or controller
@@ -212,7 +212,7 @@ public class InputManager : MonoBehaviour
         if (SetKeyboardID != -1) // If keyboard
             s = "Actions [Keyboard]";
         else // If Controller
-            s = "Actions [Xbox / Playstation]";
+            s = "Actions [Gamepad]";
         return s + "\nAction 1: " + GetKeyUsedForNorthButton + "\nAction 2: " + GetKeyUsedForSouthButton + "\nAction 3: " + GetKeyUsedForWestButton + "\nAction 4: " + GetKeyUsedForEastButton + "\nStart: " + GetKeyUsedForStartButton;
     }
     //After Update() is done, remember what buttons was pressed during the Update. (This is done to later know if the player is pressing or holding the button)
