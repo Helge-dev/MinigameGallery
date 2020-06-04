@@ -37,8 +37,8 @@ public class BallCollision : MonoBehaviour
                     nrOfBouncesBad++;
                 }
             }
-            Debug.Log("bad" + nrOfBouncesBad);
-            Debug.Log("good" + nrOfBouncesGood);
+            //Debug.Log("bad" + nrOfBouncesBad);
+            //Debug.Log("good" + nrOfBouncesGood);
         }
         
     }
