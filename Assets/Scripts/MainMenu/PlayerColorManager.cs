@@ -12,6 +12,7 @@ public class PlayerColorManager : MonoBehaviour
         for (int count = 0; count < DataStorage.GetSetControllers.Count; count++)
         {
             images[count].color = DataStorage.GetSetPlayerColor[count + 1];
+            UpdateToNewPlayerImage(count + 1);
         }
     }
     //Changes a players color to a random color

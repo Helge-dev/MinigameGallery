@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 /*
  * Made by Helge Herrström
@@ -96,17 +97,25 @@ public class MainMenu : MonoBehaviour
         }
     }
     //Find scenes that can be played up to four players and put them into the game loop as a minigame
-    void FindFourPlayerScenes() => AddPlayableScenesFromDirectory(fourPlayerScenesPath);
+    void FindFourPlayerScenes() => AddPlayableScenesByPlayerCount(false);
     //Find scenes that can be played up to eight players and put the into the game loop as a minigame
-    void FindEightPlayerScenes() => AddPlayableScenesFromDirectory(eightPlayerScenesPath);
+    void FindEightPlayerScenes() => AddPlayableScenesByPlayerCount(true);
     //Add scenes inside a path into playable scenes that may be picked by the game loop as a minigame
-    void AddPlayableScenesFromDirectory(string foldierPath)
+    void AddPlayableScenesByPlayerCount(bool eightPlayerGames)
     {
-        foreach (string path in System.IO.Directory.GetFiles(Application.dataPath + foldierPath, "*.unity"))
+        if (eightPlayerGames)
         {
-            //Add the scene (And make it readable for unity)
-            string directory = path.Replace(".unity", "").Replace('\\', '/').Replace(Application.dataPath, "").TrimStart('/');
-            DataStorage.GetSetPlayableGames.Add(directory); 
+            foreach (string s in DataStorage.GetEightPlayerGames)
+            {
+                DataStorage.GetSetPlayableGames.Add(s);
+            }
+        }
+        else
+        {
+            foreach (string s in DataStorage.GetFourPlayerGames)
+            {
+                DataStorage.GetSetPlayableGames.Add(s);
+            }
         }
     }
     //Hide Option Items and show Menu
