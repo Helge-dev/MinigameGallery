@@ -44,9 +44,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sounds:
-  - name: BallBounce
+  - name: Bounce
     clip: {fileID: 8300000, guid: 3b2679503be5b474dbee95261d435ffd, type: 3}
     volume: 0.749
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Hit
+    clip: {fileID: 8300000, guid: 2f312d3b3d2b3ff42a22f4f5eee65c3b, type: 3}
+    volume: 0.749
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Music
+    clip: {fileID: 8300000, guid: 1acb8ed6a95bc39488a10253d5678469, type: 3}
+    volume: 0.343
     pitch: 1
     loop: 0
     source: {fileID: 0}

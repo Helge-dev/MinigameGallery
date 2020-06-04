@@ -20,6 +20,8 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
+        DontDestroyOnLoad(gameObject);
+
         foreach(Sound s in sounds)
         {
             s.source = gameObject.AddComponent<AudioSource>();
@@ -28,6 +30,10 @@ public class AudioManager : MonoBehaviour
             s.source.pitch = s.pitch;
             s.source.loop = s.loop;
         }
+    }
+    public void Start()
+    {
+        Play("Music");
     }
 
     public void Play (string name)

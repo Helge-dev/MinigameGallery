@@ -1682,7 +1682,7 @@ PrefabInstance:
     - target: {fileID: 6072123316469052834, guid: ba2149c6d089c184cb5fc91e70bd22fe,
         type: 3}
       propertyPath: sounds.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6072123316469052834, guid: ba2149c6d089c184cb5fc91e70bd22fe,
         type: 3}
@@ -1712,17 +1712,17 @@ PrefabInstance:
     - target: {fileID: 6072123316469052834, guid: ba2149c6d089c184cb5fc91e70bd22fe,
         type: 3}
       propertyPath: sounds.Array.data[2].name
-      value: Hit
+      value: Music
       objectReference: {fileID: 0}
     - target: {fileID: 6072123316469052834, guid: ba2149c6d089c184cb5fc91e70bd22fe,
         type: 3}
       propertyPath: sounds.Array.data[2].clip
       value: 
-      objectReference: {fileID: 8300000, guid: 2f312d3b3d2b3ff42a22f4f5eee65c3b, type: 3}
+      objectReference: {fileID: 8300000, guid: 1acb8ed6a95bc39488a10253d5678469, type: 3}
     - target: {fileID: 6072123316469052834, guid: ba2149c6d089c184cb5fc91e70bd22fe,
         type: 3}
       propertyPath: sounds.Array.data[2].volume
-      value: 0.639
+      value: 0.465
       objectReference: {fileID: 0}
     - target: {fileID: 6072123316469052834, guid: ba2149c6d089c184cb5fc91e70bd22fe,
         type: 3}
@@ -1733,6 +1733,11 @@ PrefabInstance:
         type: 3}
       propertyPath: sounds.Array.data[0].name
       value: Bounce
+      objectReference: {fileID: 0}
+    - target: {fileID: 6072123316469052834, guid: ba2149c6d089c184cb5fc91e70bd22fe,
+        type: 3}
+      propertyPath: sounds.Array.data[2].loop
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6072123316469052835, guid: ba2149c6d089c184cb5fc91e70bd22fe,
         type: 3}
