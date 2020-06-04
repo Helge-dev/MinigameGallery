@@ -22,7 +22,7 @@ public class BallMovement : MonoBehaviour
     Material[] material = null;
     Renderer rend;
     [SerializeField]
-    Text playerRight, playerLeft, leftSideHit, rightSideHit, playerOut;
+    Text playerRight, playerLeft, leftSideHit, rightSideHit, playerOut, buttonMenu, queueLeft, queueRight;
     [SerializeField]
     BallCollision ballCollision = null;
     List<int> playerListLeft = new List<int>();
@@ -60,25 +60,35 @@ public class BallMovement : MonoBehaviour
         }
         //buttonMenu.text = ;
         whoIsHitting = playerListLeft[0];
+
+        //buttonMenu.text = DataStorage.GetSetControllers[1].GetKeyUsedForSouthButton
     }
     void Update()
     {
+        buttonMenu.text = "Player " + whoIsHitting + ": High = " + DataStorage.GetSetControllers[whoIsHitting].GetKeyUsedForSouthButton +
+            "   Normal = " + DataStorage.GetSetControllers[whoIsHitting].GetKeyUsedForEastButton + "   Low = " + DataStorage.GetSetControllers[whoIsHitting].GetKeyUsedForNorthButton 
+            + "    Smash = " + DataStorage.GetSetControllers[whoIsHitting].GetKeyUsedForWestButton;
+        buttonMenu.color = DataStorage.GetSetPlayerColor[whoIsHitting];
+
         Time.timeScale = timeScale;
         timerText -= Time.deltaTime;
         timerTextOut -= Time.deltaTime;
 
+        queueLeft.text = "";
+        foreach(int i in playerListLeft)
+        {
+            queueLeft.text += "Player: " + i + " ";
+        }
+        queueRight.text = "";
+        foreach (int i in playerListRight)
+        {
+            queueRight.text += "Player: " + i + " ";
+        }
+
         Debug.Log(playerListLeft.Count);
         Debug.Log(playerListRight.Count);
-        if (playerListLeft.Count == 0 && playerListRight.Count > 1)
-        {
-            playerListLeft.Add(playerListRight[playerListRight.Count - 1]);
-            playerListRight.RemoveAt(playerListRight.Count - 1);
-        }
-        if (playerListLeft.Count > 1 && playerListRight.Count == 0)
-        {
-            playerListRight.Add(playerListLeft[playerListLeft.Count - 1]);
-            playerListLeft.RemoveAt(playerListLeft.Count - 1);
-        }
+
+        //HEERE!!!!!!!!!!
 
         //Manages the "reset"
         if (resetGame)
@@ -229,7 +239,6 @@ public class BallMovement : MonoBehaviour
     //Resets the ball when a player is removed from the match
     public void Reset()
     {
-        rb.transform.position = new Vector3(-50, 10, 0);
         rb.velocity = Vector3.zero;
         lastForce = Vector3.zero;
         rb.useGravity = false;
@@ -238,9 +247,35 @@ public class BallMovement : MonoBehaviour
         rend.sharedMaterial = material[1];
         timeBeforeReset = 5f;
         timer = 9999;
+        if (playerListLeft.Count < playerListRight.Count)
+        {
+            Debug.Log("left is empty");
+            left = false;
+            rb.transform.position = new Vector3(50, 10, 0);
+            /*playerListLeft.Add(playerListRight[playerListRight.Count - 1]);
+            playerListRight.RemoveAt(playerListRight.Count - 1);*/
+        }
+        if (playerListLeft.Count >playerListRight.Count)
+        {
+            Debug.Log("right is empty");
+            left = true;
+            rb.transform.position = new Vector3(-50, 10, 0);
+            /*playerListRight.Add(playerListLeft[playerListLeft.Count - 1]);
+            playerListLeft.RemoveAt(playerListLeft.Count - 1);*/
+        }
+        if (playerListLeft.Count == playerListRight.Count)
+        {
+            Debug.Log("equal");
+            left = true;
+            rb.transform.position = new Vector3(-50, 10, 0);
+            /*playerListRight.Add(playerListLeft[playerListLeft.Count - 1]);
+            playerListLeft.RemoveAt(playerListLeft.Count - 1);*/
+        }
+        //rb.transform.position = new Vector3(-50, 10, 0);
+        
         ballCollision.nrOfBouncesGood = 0;
         ballCollision.nrOfBouncesBad = 0;
-        left = true;
+        //left = true;
         canRemove = true;
         if ((playerListLeft.Count + playerListRight.Count) <= 2)
             twoLeft = true;
@@ -280,6 +315,7 @@ public class BallMovement : MonoBehaviour
                 left = true;
             }
         }
+        
     }
 
     //Sends the winner to "CommonCommands" or removes players from the list if there are more than 2 players left
