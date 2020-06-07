@@ -9,3 +9,5 @@ Första gången en knapp används på tangentbordet så deltar en person automat
 4 huvudknapparna, start, vänster-spak (kan använda dpad istället).
 # Möjliga problem
 Om det skapas 2 profiler av en kontroll: Tänk på att stänga ner eventuella program som emulerar din playstation 4 kontroll som en xbox.
+# Repository
+https://github.com/Helge-dev/MinigameGallery
